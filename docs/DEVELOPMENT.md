@@ -1,6 +1,6 @@
-# Atley KV4P development
+# AtleyHT development
 
-This fork develops a modern Android experience on top of the official [kv4p HT](https://github.com/VanceVagell/kv4p-ht) hardware, firmware, and radio stack. The provisional product name is **Atley KV4P**. Upstream credit and GPL-3.0 remain in force.
+This fork develops a modern Android experience on top of the official [kv4p HT](https://github.com/VanceVagell/kv4p-ht) hardware, firmware, and radio stack. The product name is **AtleyHT**. Upstream credit and GPL-3.0 remain in force.
 
 ## Clone with origin and upstream
 
@@ -8,7 +8,7 @@ If GitHub authentication works:
 
 ```bash
 gh repo fork VanceVagell/kv4p-ht --clone=false
-git clone https://github.com/atleyllc/kv4p-ht.git
+git clone https://github.com/atleyllc/atleyht.git
 cd kv4p-ht
 git remote add upstream https://github.com/VanceVagell/kv4p-ht.git
 git fetch origin
@@ -19,7 +19,7 @@ git checkout -b atley/android-foundation
 Expected remotes:
 
 ```
-origin    https://github.com/atleyllc/kv4p-ht.git
+origin    https://github.com/atleyllc/atleyht.git
 upstream  https://github.com/VanceVagell/kv4p-ht.git
 ```
 

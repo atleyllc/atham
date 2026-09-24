@@ -7,7 +7,7 @@ The official project is **kv4p HT** by Vance Vagell and contributors:
 - https://github.com/VanceVagell/kv4p-ht
 - License: GNU GPL version 3 (`LICENSE` in the repository root)
 
-This Atley LLC checkout is a fork. The provisional name **Atley KV4P** does not replace upstream authorship. Do not remove copyright headers, `LICENSE`, or protocol/vendor identifiers that credit KV4P.
+This Atley LLC checkout is a fork. The name **AtleyHT** does not replace upstream authorship. Do not remove copyright headers, `LICENSE`, or protocol/vendor identifiers that credit KV4P.
 
 ## What is upstream vs Atley
 

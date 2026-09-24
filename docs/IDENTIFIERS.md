@@ -1,6 +1,6 @@
 # Identifiers and branding migration
 
-Working product name: **Atley KV4P** (provisional). Visible upstream credit must remain. Do **not** change these identifiers until a dedicated migration is approved.
+Working product name: **AtleyHT**. GitHub repository: `atleyllc/atleyht`. Visible upstream credit must remain. Do **not** change Android, USB, protocol, or firmware identifiers until a dedicated migration is approved.
 
 ## What each identifier controls
 
@@ -23,7 +23,7 @@ Working product name: **Atley KV4P** (provisional). Visible upstream credit must
 
 ## What is safe to change now
 
-- User-visible title strings **in addition to** upstream credit (for example an about line: "Atley KV4P, based on kv4p HT by Vance Vagell").
+- User-visible title strings **in addition to** upstream credit (for example an about line: "AtleyHT, based on kv4p HT by Vance Vagell").
 - Documentation and repository description.
 - Derived UI state labels (this branch).
 
@@ -38,7 +38,7 @@ Working product name: **Atley KV4P** (provisional). Visible upstream credit must
 ## Proposed later migration (not in this phase)
 
 1. Keep `com.vagell.kv4pht` while the fork is a development build of the same hardware protocol.
-2. If a distinct Play app is required, use a **new** `applicationId` such as `com.atley.kv4p` and treat it as a new install. Provide an explicit memory/APRS export/import first.
+2. If a distinct Play app is required, use a **new** `applicationId` such as `com.atley.atleyht` and treat it as a new install. Provide an explicit memory/APRS export/import first.
 3. Keep protocol `"KV4P"` and USB IDs forever unless hardware changes; those identify the radio, not the fork.
 4. After data export exists, optionally migrate Room from `kv4pht-db` to a new name.
 5. Change the launcher label only after an about screen still names kv4p HT and Vance Vagell.

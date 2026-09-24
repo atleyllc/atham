@@ -1,5 +1,5 @@
 /*
-Atley KV4P connection-state model
+AtleyHT connection-state model
 Based on kv4p HT (see http://kv4p.com)
 Copyright (C) 2024 Vance Vagell
 Copyright (C) 2026 Atley LLC

@@ -1,6 +1,6 @@
 # Architecture assessment
 
-Inspected from commit `6f3265e81abf64e812de7c653486c79e1903b2e8` (`upstream/main`, 2026-09-24). This is the official kv4p HT tree. Atley changes are additive unless a file header says otherwise.
+Inspected from commit `6f3265e81abf64e812de7c653486c79e1903b2e8` (`upstream/main`, 2026-09-24). This is the official kv4p HT tree. AtleyHT changes are additive unless a file header says otherwise.
 
 ## Languages and frameworks
 

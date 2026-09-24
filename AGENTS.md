@@ -1,6 +1,6 @@
-# Agent instructions for Atley KV4P
+# Agent instructions for AtleyHT
 
-This repository is a GPL-3.0 fork of [kv4p HT](https://github.com/VanceVagell/kv4p-ht) by Vance Vagell and contributors. The provisional working product name is **Atley KV4P**. Preserve visible upstream credit.
+This repository is a GPL-3.0 fork of [kv4p HT](https://github.com/VanceVagell/kv4p-ht) by Vance Vagell and contributors. The working product name is **AtleyHT**. Preserve visible upstream credit.
 
 Read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/LICENSING.md](docs/LICENSING.md), and [docs/ATLEY_ANDROID_ROADMAP.md](docs/ATLEY_ANDROID_ROADMAP.md) before making product changes.
 
@@ -16,7 +16,7 @@ Read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md), [docs/ARCHITECTURE.md](docs/ARC
 
 Keep these remotes:
 
-- `origin` = this fork (`https://github.com/atleyllc/kv4p-ht.git`)
+- `origin` = this fork (`https://github.com/atleyllc/atleyht.git`)
 - `upstream` = official project (`https://github.com/VanceVagell/kv4p-ht.git`)
 
 Never force-push, rewrite upstream history, or change the `upstream` remote URL. Prefer upstream-compatible improvements when reasonable, and note changes that could be submitted back.

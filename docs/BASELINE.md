@@ -4,7 +4,7 @@ Recorded 2026-09-24 on macOS 15 (darwin 25.6.0), Apple Silicon. No KV4P-HT hardw
 
 Upstream commit: `6f3265e81abf64e812de7c653486c79e1903b2e8`  
 Branch: `atley/android-foundation`  
-Fork: `https://github.com/atleyllc/kv4p-ht`  
+Fork: `https://github.com/atleyllc/atleyht`  
 Upstream remote: `https://github.com/VanceVagell/kv4p-ht.git`
 
 ## Tool versions used

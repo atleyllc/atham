@@ -4,12 +4,12 @@ Open source handheld ham radio project kv4p HT
 
 Please see the main project site: https://kv4p.com
 
-## Atley KV4P fork
+## AtleyHT fork
 
-This checkout is the Atley LLC fork of the official project. The provisional working name is **Atley KV4P**. Vance Vagell and the kv4p HT contributors remain the upstream authors. The project stays GPL-3.0.
+This checkout is the Atley LLC fork of the official project. The working name is **AtleyHT**. Vance Vagell and the kv4p HT contributors remain the upstream authors. The project stays GPL-3.0.
 
 - Official upstream: https://github.com/VanceVagell/kv4p-ht
-- This fork: https://github.com/atleyllc/kv4p-ht
+- This fork: https://github.com/atleyllc/atleyht
 - Development branch: `atley/android-foundation`
 
 Fork documentation (does not replace the upstream build steps below):

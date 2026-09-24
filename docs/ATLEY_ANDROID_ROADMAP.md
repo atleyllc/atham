@@ -1,6 +1,6 @@
-# Atley KV4P Android roadmap
+# AtleyHT Android roadmap
 
-Working name: **Atley KV4P**. Foundation: official kv4p HT (`VanceVagell/kv4p-ht`), GPL-3.0. This is not a greenfield rewrite.
+Working name: **AtleyHT**. Repository: `atleyllc/atleyht`. Foundation: official kv4p HT (`VanceVagell/kv4p-ht`), GPL-3.0. This is not a greenfield rewrite.
 
 Hardware facts that constrain the plan:
 
@@ -121,7 +121,7 @@ Do not move AFSK back to Android `javAX25` unless firmware AFSK is proven insuff
 | Local integration contract | Docs | n/a | none | Low | Example extra keys | No required account | F1 |
 | No cloud account | Policy | n/a | already true | n/a | Review new deps | Permanent constraint | always |
 
-Suggested local contract (draft, not implemented): an explicit user action sends `application/vnd.atley.voicelog-contact+json` or a documented `Intent` extra set (`frequencyHz`, `mode`, `timestampUtc`, `gridOptional`, `source=atley-kv4p`). No automatic upload.
+Suggested local contract (draft, not implemented): an explicit user action sends `application/vnd.atley.voicelog-contact+json` or a documented `Intent` extra set (`frequencyHz`, `mode`, `timestampUtc`, `gridOptional`, `source=atleyht`). No automatic upload.
 
 ---
 
