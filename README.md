@@ -4,6 +4,24 @@ Open source handheld ham radio project kv4p HT
 
 Please see the main project site: https://kv4p.com
 
+## Atley KV4P fork
+
+This checkout is the Atley LLC fork of the official project. The provisional working name is **Atley KV4P**. Vance Vagell and the kv4p HT contributors remain the upstream authors. The project stays GPL-3.0.
+
+- Official upstream: https://github.com/VanceVagell/kv4p-ht
+- This fork: https://github.com/atleyllc/kv4p-ht
+- Development branch: `atley/android-foundation`
+
+Fork documentation (does not replace the upstream build steps below):
+
+- [AGENTS.md](AGENTS.md) — rules for coding agents
+- [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) — remotes, tools, build and test commands
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — Android and firmware assessment
+- [docs/LICENSING.md](docs/LICENSING.md) — GPL and third-party licenses
+- [docs/IDENTIFIERS.md](docs/IDENTIFIERS.md) — application IDs and branding
+- [docs/BASELINE.md](docs/BASELINE.md) — recorded baseline build results
+- [docs/ATLEY_ANDROID_ROADMAP.md](docs/ATLEY_ANDROID_ROADMAP.md) — staged modernization plan
+
 ## Building from source
 
 The site above is for installing a public release. Compiling this repo yourself means building **both** the ESP32 firmware and the Android app from the same git revision.
