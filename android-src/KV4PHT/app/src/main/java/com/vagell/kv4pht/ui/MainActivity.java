@@ -1,6 +1,7 @@
 /*
 kv4p HT (see http://kv4p.com)
 Copyright (C) 2024 Vance Vagell
+Modified 2026 by Atley LLC: display derived radio connection state.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -87,6 +88,9 @@ import com.vagell.kv4pht.data.ChannelMemory;
 import com.vagell.kv4pht.databinding.ActivityMainBinding;
 import com.vagell.kv4pht.radio.RadioAudioService;
 import com.vagell.kv4pht.radio.RadioModuleController;
+import com.vagell.kv4pht.radio.RadioConnectionCause;
+import com.vagell.kv4pht.radio.RadioConnectionSnapshot;
+import com.vagell.kv4pht.radio.RadioConnectionState;
 import com.vagell.kv4pht.radio.RadioMode;
 
 import java.util.ArrayList;
@@ -313,6 +317,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
+                public void connectionStateChanged(RadioConnectionSnapshot snapshot) {
+                    runOnUiThread(() -> applyConnectionState(snapshot));
+                }
+
+                @Override
                 public void setRadioType(RadioAudioService.RadioModuleType radioType) {
                     if (radioType.equals(RadioAudioService.RadioModuleType.VHF)) {
                         showBand(BandType.BAND_VHF);
@@ -456,14 +465,6 @@ public class MainActivity extends AppCompatActivity {
                  */
                 private void showModuleState(boolean txActive, boolean squelched) {
                     moduleTxActive = txActive;
-                    TextView moduleStateLabel = findViewById(R.id.moduleStateLabel);
-                    if (txActive) {
-                        moduleStateLabel.setText(R.string.module_state_tx);
-                    } else if (squelched) {
-                        moduleStateLabel.setText(R.string.module_state_squelched);
-                    } else {
-                        moduleStateLabel.setText("");
-                    }
                     updateSMeter(currentSMeterValue);
                 }
 
@@ -527,6 +528,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
             radioAudioService.setCallbacks(callbacks);
+            applyConnectionState(radioAudioService.getConnectionSnapshot());
             applySettings(); // Some settings require radioAudioService to exist to apply.
             radioAudioService.setChannelMemories(viewModel.getChannelMemories());
             runOnUiThread(() -> radioAudioService.start());
@@ -1497,6 +1499,82 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    private void applyConnectionState(RadioConnectionSnapshot snapshot) {
+        TextView moduleStateLabel = findViewById(R.id.moduleStateLabel);
+        if (moduleStateLabel == null || snapshot == null) {
+            return;
+        }
+        moduleStateLabel.setText(labelForConnectionState(snapshot.getState()));
+        moduleStateLabel.setContentDescription(descriptionForConnectionState(snapshot));
+    }
+
+    private String labelForConnectionState(RadioConnectionState state) {
+        switch (state) {
+            case REQUESTING_USB_PERMISSION:
+                return getString(R.string.connection_state_usb);
+            case CONNECTING:
+                return getString(R.string.connection_state_connecting);
+            case CONNECTED_IDLE:
+                return getString(R.string.module_state_squelched);
+            case RECEIVING:
+                return getString(R.string.connection_state_rx);
+            case TRANSMITTING:
+                return getString(R.string.module_state_tx);
+            case SCANNING:
+                return getString(R.string.connection_state_scan);
+            case FIRMWARE_INCOMPATIBLE:
+                return getString(R.string.connection_state_firmware);
+            case RECOVERABLE_ERROR:
+                return getString(R.string.connection_state_error);
+            case FATAL_ERROR:
+                return getString(R.string.connection_state_fatal);
+            case DISCONNECTED:
+            default:
+                return getString(R.string.connection_state_off);
+        }
+    }
+
+    private String descriptionForConnectionState(RadioConnectionSnapshot snapshot) {
+        String stateDescription;
+        switch (snapshot.getState()) {
+            case REQUESTING_USB_PERMISSION:
+                stateDescription = getString(R.string.connection_state_usb_description);
+                break;
+            case CONNECTING:
+                stateDescription = getString(R.string.connection_state_connecting_description);
+                break;
+            case CONNECTED_IDLE:
+                stateDescription = getString(R.string.connection_state_idle_description);
+                break;
+            case RECEIVING:
+                stateDescription = getString(R.string.connection_state_rx_description);
+                break;
+            case TRANSMITTING:
+                stateDescription = getString(R.string.connection_state_tx_description);
+                break;
+            case SCANNING:
+                stateDescription = getString(R.string.connection_state_scan_description);
+                break;
+            case FIRMWARE_INCOMPATIBLE:
+                stateDescription = getString(R.string.connection_state_firmware_description);
+                break;
+            case RECOVERABLE_ERROR:
+                stateDescription = getString(R.string.connection_state_error_description);
+                break;
+            case FATAL_ERROR:
+                stateDescription = getString(R.string.connection_state_fatal_description);
+                break;
+            case DISCONNECTED:
+            default:
+                stateDescription = getString(R.string.connection_state_off_description);
+                break;
+        }
+        if (snapshot.getCause() == RadioConnectionCause.NONE) {
+            return stateDescription;
+        }
+        return getString(R.string.connection_state_with_cause, stateDescription, snapshot.getCause().name());
+    }
 
     protected void startPttUi(boolean dataMode) {
         if (!dataMode) {

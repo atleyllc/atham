@@ -235,8 +235,9 @@
 
                     <TextView
                         android:id="@+id/moduleStateLabel"
-                        android:layout_width="48dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:minWidth="48dp"
                         android:layout_marginStart="32dp"
                         android:gravity="start|bottom"
                         android:includeFontPadding="false"
@@ -245,6 +246,8 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:translationY="2dp"
+                        android:maxLines="1"
+                        android:importantForAccessibility="yes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

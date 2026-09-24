@@ -1,6 +1,7 @@
 /*
 kv4p HT (see http://kv4p.com)
 Copyright (C) 2024 Vance Vagell
+Modified 2026 by Atley LLC: derived radio connection-state publication.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -242,6 +243,8 @@ public class RadioAudioService extends Service {
     private final ConnectionController connectionController =
         new ConnectionController(handler, CONNECT_RETRY_PERIOD_MS, this::reconcileConnections);
     private boolean radioMissingNotified = false;
+    private RadioConnectionCause connectionCause = RadioConnectionCause.NONE;
+    private RadioConnectionSnapshot lastPublishedConnectionSnapshot;
     private Runnable txTimeoutHandler;
     private LiveData<List<ChannelMemory>> channelMemoriesLiveData = null;
 
@@ -261,6 +264,7 @@ public class RadioAudioService extends Service {
     public interface RadioAudioServiceCallbacks {
         default void radioMissing() {}
         default void radioConnected() {}
+        default void connectionStateChanged(RadioConnectionSnapshot snapshot) {}
         default void hideSnackBar() {}
         default void radioModuleHandshake() {}
         default void radioModuleNotFound() {}
@@ -405,6 +409,7 @@ public class RadioAudioService extends Service {
                 abandonAudioFocus();
             }
         }
+        publishConnectionState();
     }
 
     private void syncFirmwareAudioStateForMode(RadioMode mode) {
@@ -971,6 +976,8 @@ public class RadioAudioService extends Service {
         usbPermissionRequestPending = false;
         // Re-plug is an explicit user/device action; allow connection attempts again.
         radioMissingNotified = false;
+        connectionCause = RadioConnectionCause.NONE;
+        publishConnectionState();
     }
 
     public void renegotiateAfterFlashing() {
@@ -982,6 +989,7 @@ public class RadioAudioService extends Service {
     public void onUsbPermissionDenied() {
         Log.w(TAG, connectLog("USB permission denied by system dialog"));
         usbPermissionRequestPending = false;
+        connectionCause = RadioConnectionCause.USB_PERMISSION_DENIED;
         radioMissing();
     }
 
@@ -1073,6 +1081,7 @@ public class RadioAudioService extends Service {
             }
             Log.i(TAG, connectLog("setupSerialConnection(): requesting USB permission"));
             usbPermissionRequestPending = true;
+            publishConnectionState();
             PendingIntent permissionIntent = PendingIntent.getBroadcast(
                 this,
                 0,
@@ -1112,12 +1121,14 @@ public class RadioAudioService extends Service {
         }
         RadioTransport transport = new UsbSerialRadioTransport(serialPort, handler);
         activeTransport = transport;
+        publishConnectionState();
         transport.start(createTransportListener(transport));
     }
 
     private void attemptBleConnect() {
         RadioTransport transport = new BleKissRadioTransport(this, handler);
         activeTransport = transport;
+        publishConnectionState();
         transport.start(createTransportListener(transport));
     }
 
@@ -1144,6 +1155,7 @@ public class RadioAudioService extends Service {
             public void onDisconnected() {
                 if (activeTransport == transport) {
                     Log.i(TAG, connectLog(transport.getName() + " disconnected"));
+                    connectionCause = RadioConnectionCause.NONE;
                     radioMissing();
                 }
             }
@@ -1155,6 +1167,7 @@ public class RadioAudioService extends Service {
                     if (audioTrack != null) {
                         audioTrack.stop();
                     }
+                    connectionCause = RadioConnectionCause.TRANSPORT_ERROR;
                     radioMissing();
                 }
             }
@@ -1168,11 +1181,13 @@ public class RadioAudioService extends Service {
     public void radioConnected() {
         Log.i(TAG, connectLog("radioConnected(): handshake complete; state=" + connectionStateSummary()));
         radioMissingNotified = false;
+        connectionCause = RadioConnectionCause.NONE;
         // Acquire WakeLock if not already held to ensure audio processing continues in background.
         if (wakeLock != null && !wakeLock.isHeld()) {
             wakeLock.acquire();
         }
         callbacks.radioConnected();
+        publishConnectionState();
     }
 
     private void startProtocolHandshake() {
@@ -1182,6 +1197,7 @@ public class RadioAudioService extends Service {
         callbacks.radioModuleHandshake();
         Log.i(TAG, handshakeLog(handshakeId, "start(): waiting for HELLO(version)"));
         scheduleHelloTimeout(handshakeId);
+        publishConnectionState();
     }
 
     private void scheduleHelloTimeout(int handshakeId) {
@@ -1192,6 +1208,7 @@ public class RadioAudioService extends Service {
             }
             waitingForHello = false;
             Log.w(TAG, handshakeLog(handshakeId, "waitForHello(): timed out after " + HELLO_TIMEOUT_MS + "ms"));
+            connectionCause = RadioConnectionCause.HELLO_TIMEOUT;
             setMode(RadioMode.BAD_FIRMWARE);
             callbacks.missingFirmware();
         };
@@ -1223,6 +1240,7 @@ public class RadioAudioService extends Service {
     private void validateHello(int handshakeId, Optional<Protocol.Hello> hello) {
         if (!hello.isPresent()) {
             Log.e(TAG, handshakeLog(handshakeId, "HELLO missing valid Hello payload; firmware upgrade required"));
+            connectionCause = RadioConnectionCause.INVALID_HELLO;
             callbacks.outdatedFirmware(0);
             setMode(RadioMode.BAD_FIRMWARE);
             return;
@@ -1232,6 +1250,7 @@ public class RadioAudioService extends Service {
         Protocol.FirmwareVersion version = helloPayload.getVersion();
         Log.d(TAG, handshakeLog(handshakeId, "hello=" + helloPayload));
         if (version.getVer() < FirmwareUtils.PACKAGED_FIRMWARE_VER) {
+            connectionCause = RadioConnectionCause.OUTDATED_FIRMWARE;
             callbacks.outdatedFirmware(version.getVer());
             setMode(RadioMode.BAD_FIRMWARE);
             return;
@@ -1240,6 +1259,7 @@ public class RadioAudioService extends Service {
         handleHello(helloPayload);
         if (Protocol.RadioStatus.RADIO_STATUS_NOT_FOUND.equals(version.getRadioModuleStatus())) {
             Log.w(TAG, handshakeLog(handshakeId, "radio module not found"));
+            connectionCause = RadioConnectionCause.RADIO_MODULE_NOT_FOUND;
             setMode(RadioMode.BAD_FIRMWARE);
             callbacks.radioModuleNotFound();
             return;
@@ -1279,6 +1299,7 @@ public class RadioAudioService extends Service {
             radioMissingNotified = true;
             callbacks.radioMissing(); // Notify UI only on transition into missing state
         }
+        publishConnectionState();
     }
 
     int getActiveUsbConnectAttemptId() {
@@ -1295,7 +1316,36 @@ public class RadioAudioService extends Service {
             + ",activeTransport=" + (activeTransport != null ? activeTransport.getName() : "null")
             + ",activeTransportReady=" + (activeTransport != null && activeTransport.isReady())
             + ",usbPermissionPending=" + usbPermissionRequestPending
-            + ",radioMissingNotified=" + radioMissingNotified;
+            + ",radioMissingNotified=" + radioMissingNotified
+            + ",connection=" + getConnectionSnapshot();
+    }
+
+    @NonNull
+    public RadioConnectionSnapshot getConnectionSnapshot() {
+        return RadioConnectionStateResolver.resolve(currentConnectionInputs());
+    }
+
+    private RadioConnectionInputs currentConnectionInputs() {
+        return new RadioConnectionInputs(
+            mode,
+            usbPermissionRequestPending,
+            waitingForHello,
+            activeTransport != null,
+            isConnectionReady(),
+            radioModule.isDeviceTxActive(),
+            radioModule.isSquelched(),
+            connectionCause
+        );
+    }
+
+    private void publishConnectionState() {
+        RadioConnectionSnapshot snapshot = getConnectionSnapshot();
+        if (snapshot.equals(lastPublishedConnectionSnapshot)) {
+            return;
+        }
+        lastPublishedConnectionSnapshot = snapshot;
+        Log.i(TAG, connectLog("connectionState=" + snapshot));
+        callbacks.connectionStateChanged(snapshot);
     }
 
     static String threadTag() {
@@ -1605,6 +1655,7 @@ public class RadioAudioService extends Service {
         final boolean deviceTxActive = radioModule.isDeviceTxActive();
         final boolean squelched = radioModule.isSquelched();
         callbacks.moduleStateChanged(deviceTxActive, squelched);
+        publishConnectionState();
         updateAudioFocusForSquelch(squelched);
         if (radioModule.isAppliedStateInSync() && radioModule.getTxFrequency() > 0) {
             updateTxAllowed(radioModule.getTxFrequency());

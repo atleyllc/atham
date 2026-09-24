@@ -132,6 +132,25 @@
     <string name="sticky_ptt" translatable="false">Sticky PTT</string>
     <string name="module_state_squelched">SQL</string>
     <string name="module_state_tx">TX</string>
+    <string name="connection_state_off">OFF</string>
+    <string name="connection_state_usb">USB</string>
+    <string name="connection_state_connecting">LINK</string>
+    <string name="connection_state_rx">RX</string>
+    <string name="connection_state_scan">SCAN</string>
+    <string name="connection_state_firmware">FW</string>
+    <string name="connection_state_error">ERR</string>
+    <string name="connection_state_fatal">FAIL</string>
+    <string name="connection_state_off_description">Radio disconnected</string>
+    <string name="connection_state_usb_description">Requesting USB permission</string>
+    <string name="connection_state_connecting_description">Connecting to radio</string>
+    <string name="connection_state_idle_description">Connected and idle</string>
+    <string name="connection_state_rx_description">Receiving</string>
+    <string name="connection_state_tx_description">Transmitting</string>
+    <string name="connection_state_scan_description">Scanning</string>
+    <string name="connection_state_firmware_description">Firmware incompatible</string>
+    <string name="connection_state_error_description">Recoverable radio error</string>
+    <string name="connection_state_fatal_description">Fatal radio error</string>
+    <string name="connection_state_with_cause">%1$s (%2$s)</string>
     <string name="find_repeaters_menu_item">Find nearby repeaters</string>
     <string name="flash_firmware_menu_item">Flash firmware</string>
     <string name="find_repeaters_title">Find nearby repeaters</string>
