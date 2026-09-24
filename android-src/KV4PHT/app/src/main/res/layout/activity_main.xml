@@ -72,7 +72,7 @@
                     android:fontFamily="@font/jost"
                     android:gravity="center"
                     android:text="@string/welcome_to_display"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/atley_muted"
                     android:textSize="24dp"
                     android:maxLines="1"/>
 
@@ -84,7 +84,7 @@
                     android:layout_marginTop="-8dp"
                     android:fontFamily="@font/jost"
                     android:gravity="center"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/atley_bronze"
                     android:textSize="64dp"
                     android:text="@string/kv4p_ht"
                     android:background="@color/clear"

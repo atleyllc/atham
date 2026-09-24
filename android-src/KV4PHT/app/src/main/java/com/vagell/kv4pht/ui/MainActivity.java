@@ -471,7 +471,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void chatError(String text) {
                     Snackbar snackbar = Snackbar.make(context, findViewById(R.id.mainTopLevelLayout), text, LENGTH_LONG)
-                            .setBackgroundTint(Color.rgb(140, 20, 0))
+                            .setBackgroundTint(ContextCompat.getColor(MainActivity.this, R.color.atley_danger))
                             .setTextColor(Color.WHITE)
                             .setAnchorView(findViewById(R.id.textChatInput));
 
@@ -897,8 +897,8 @@ public class MainActivity extends AppCompatActivity {
                         startSettingsActivity();
                     }
                 })
-                .setBackgroundTint(getResources().getColor(R.color.primary))
-                .setTextColor(getResources().getColor(R.color.medium_gray))
+                .setBackgroundTint(getResources().getColor(R.color.atley_bronze))
+                .setTextColor(getResources().getColor(R.color.atley_on_bronze))
                 .setActionTextColor(getResources().getColor(R.color.black))
                 .setAnchorView(findViewById(R.id.bottomNavigationView));
 
@@ -1251,7 +1251,7 @@ public class MainActivity extends AppCompatActivity {
         final int primaryColor = ContextCompat.getColor(this, R.color.primary);
         final int overS9Color = ContextCompat.getColor(this, R.color.over_s9);
         final int overloadColor = ContextCompat.getColor(this, R.color.overload);
-        final int txColor = ContextCompat.getColor(this, R.color.accent);
+        final int txColor = ContextCompat.getColor(this, R.color.atley_danger);
         int[] sMeterIds = {
             R.id.sMeter1, R.id.sMeter2, R.id.sMeter3,
             R.id.sMeter4, R.id.sMeter5, R.id.sMeter6,
@@ -1663,7 +1663,7 @@ public class MainActivity extends AppCompatActivity {
     private void showUSBSnackbar() {
         CharSequence snackbarMsg = getString(R.string.radio_not_found);
         usbSnackbar = Snackbar.make(this, findViewById(R.id.mainTopLevelLayout), snackbarMsg, Snackbar.LENGTH_INDEFINITE)
-            .setBackgroundTint(Color.rgb(140, 20, 0)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE)
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.atley_danger)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE)
             .setAnchorView(findViewById(R.id.bottomNavigationView));
 
         // Make the text of the snackbar larger.
@@ -1678,8 +1678,8 @@ public class MainActivity extends AppCompatActivity {
     private void showHandshakeSnackbar() {
         CharSequence snackbarMsg = getString(R.string.handshake_message);
         usbSnackbar = Snackbar.make(this, findViewById(R.id.mainTopLevelLayout), snackbarMsg, Snackbar.LENGTH_INDEFINITE)
-            .setBackgroundTint(getResources().getColor(R.color.primary))
-            .setTextColor(getResources().getColor(R.color.medium_gray))
+            .setBackgroundTint(getResources().getColor(R.color.atley_bronze))
+            .setTextColor(getResources().getColor(R.color.atley_on_bronze))
             .setAnchorView(findViewById(R.id.bottomNavigationView));
 
         // Make the text of the snackbar larger.
@@ -1692,7 +1692,7 @@ public class MainActivity extends AppCompatActivity {
     private void showRadioModuleNotFoundSnackbar() {
         CharSequence snackbarMsg = getString(R.string.module_not_found_message);
         radioModuleNotFoundSnackbar = Snackbar.make(this, findViewById(R.id.mainTopLevelLayout), snackbarMsg, Snackbar.LENGTH_INDEFINITE)
-                .setBackgroundTint(Color.rgb(140, 20, 0)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE)
+                .setBackgroundTint(ContextCompat.getColor(this, R.color.atley_danger)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE)
                 .setAnchorView(findViewById(R.id.bottomNavigationView));
 
         // Make the text of the snackbar larger.
@@ -1711,7 +1711,7 @@ public class MainActivity extends AppCompatActivity {
     private void showVersionSnackbar(int firmwareVer) {
         CharSequence snackbarMsg = firmwareVer == -1 ? getString(R.string.no_firmware_installed) : getString(R.string.new_firmware_available);
         versionSnackbar = Snackbar.make(this, findViewById(R.id.mainTopLevelLayout), snackbarMsg, Snackbar.LENGTH_INDEFINITE)
-                .setBackgroundTint(Color.rgb(140, 20, 0)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE)
+                .setBackgroundTint(ContextCompat.getColor(this, R.color.atley_danger)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE)
                 .setAnchorView(findViewById(R.id.bottomNavigationView));
         if (canFlashFirmware()) {
             versionSnackbar.setAction("Flash now", view -> startFirmwareActivity());
@@ -1946,8 +1946,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSimpleSnackbar(String msg) {
         Snackbar simpleSnackbar = Snackbar.make(this, findViewById(R.id.mainTopLevelLayout), msg, LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(R.color.primary))
-                .setTextColor(getResources().getColor(R.color.medium_gray));
+                .setBackgroundTint(getResources().getColor(R.color.atley_bronze))
+                .setTextColor(getResources().getColor(R.color.atley_on_bronze));
 
         // Make the text of the snackbar larger.
         TextView snackbarTextView = (TextView) simpleSnackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);

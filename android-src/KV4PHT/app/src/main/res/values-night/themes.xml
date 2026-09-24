@@ -1,15 +1,16 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
+    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:fontFamily">@font/jost</item>
-        <item name="fontFamily">@font/jost
-        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+        <item name="fontFamily">@font/jost</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorOnPrimary">@color/primary</item>
-        <item name="colorSecondary">@color/primary</item>
+        <item name="android:windowBackground">@drawable/bg</item>
+        <item name="android:colorBackground">@color/atley_background</item>
+        <item name="colorPrimary">@color/atley_bronze</item>
+        <item name="colorOnPrimary">@color/atley_on_bronze</item>
+        <item name="colorSecondary">@color/atley_titanium</item>
+        <item name="colorSurface">@color/atley_surface</item>
+        <item name="colorOnSurface">@color/atley_foreground</item>
+        <item name="colorError">@color/atley_danger</item>
     </style>
 </resources>

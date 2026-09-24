@@ -348,7 +348,7 @@ public class FindRepeatersActivity extends AppCompatActivity {
     @SuppressWarnings("javasecurity:S6384") // This sets a fixed result code and never forwards an Intent.
     private void showErrorSnackbar(String msg) {
         errorSnackbar = Snackbar.make(this, findViewById(R.id.firmwareTopLevelView), msg, Snackbar.LENGTH_INDEFINITE)
-                .setBackgroundTint(Color.rgb(140, 20, 0)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE);
+                .setBackgroundTint(ContextCompat.getColor(this, R.color.atley_danger)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE);
         errorSnackbar.setAction("Close", view -> {
             errorSnackbar.dismiss();
             setResult(Activity.RESULT_CANCELED);

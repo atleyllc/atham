@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">kv4p HT</string>
+    <string name="app_name">AtleyHT</string>
     <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -34,11 +34,11 @@
     <string name="add_memory_display1">Add memory</string>
     <string name="to_display">To:</string>
     <string name="all_memories_display1">ALL MEMORIES ▼</string>
-    <string name="kv4p_ht" translatable="false">kv4p HT</string>
+    <string name="kv4p_ht" translatable="false">AtleyHT</string>
     <string name="vhf" translatable="false">VHF</string>
     <string name="uhf" translatable="false">UHF</string>
     <string name="push_to_talk_display">Push to talk</string>
-    <string name="welcome_to_display">Welcome to</string>
+    <string name="welcome_to_display">based on kv4p HT</string>
     <string name="send_message_display">Send message</string>
     <string name="visualization_of_current_receive_audio_volume_display" translatable="false">Visualization of current receive audio volume</string>
     <string name="settings_display">Settings</string>

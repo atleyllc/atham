@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">kv4p HT</string>
+    <string name="app_name">AtleyHT</string>
     <string name="second_fragment_label">第二段</string>
     <string name="voice_display">语音</string>
     <string name="aprs_chat_display">APRS聊天</string>
@@ -31,7 +31,7 @@
     <string name="to_display">向：</string>
     <string name="all_memories_display1">全部频道 ▼</string>
     <string name="push_to_talk_display">按下以说话</string>
-    <string name="welcome_to_display">欢迎</string>
+    <string name="welcome_to_display">based on kv4p HT</string>
     <string name="send_message_display">发送消息</string>
     <string name="settings_display">设置</string>
     <string name="send_aprs_position_beacond_display">发送APRS位置信标</string>

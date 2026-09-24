@@ -36,6 +36,7 @@ import android.view.WindowManager;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.slider.Slider;
@@ -373,7 +374,7 @@ public class SettingsActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException anfe) {
             CharSequence snackbarMsg = "This phone model doesn't support closed captions";
             Snackbar ccSnackbar = Snackbar.make(findViewById(R.id.settingsTopLevelView), snackbarMsg, Snackbar.LENGTH_LONG)
-                    .setBackgroundTint(Color.rgb(140, 20, 0)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE);
+                    .setBackgroundTint(ContextCompat.getColor(this, R.color.atley_danger)).setActionTextColor(Color.WHITE).setTextColor(Color.WHITE);
 
             // Make the text of the snackbar larger.
             TextView snackbarActionTextView = (TextView) ccSnackbar.getView().findViewById(com.google.android.material.R.id.snackbar_action);

@@ -26,6 +26,7 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.util.Log;
 import android.view.View;
@@ -168,7 +169,7 @@ public class FirmwareActivity extends AppCompatActivity {
 
     private void showErrorSnackBar(UsbSerialPort port) {
         errorSnackbar = Snackbar.make(topLevelView, FAILED_TO_MESSAGE, LENGTH_INDEFINITE)
-            .setBackgroundTint(Color.rgb(140, 20, 0))
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.atley_danger))
             .setTextColor(Color.WHITE)
             .setActionTextColor(Color.WHITE)
             .setAction(RETRY, v -> {
