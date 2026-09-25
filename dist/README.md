@@ -1,6 +1,6 @@
 # ATHAM preview APK
 
-`ATHAM-0.1.0-preview.apk` is a debug build you can sideload.
+`ATHAM-0.1.1.apk` is the current debug build. Install it from the GitHub Releases page.
 
 Package id: `com.vagell.kv4pht.atham`. It installs next to the Play Store kv4p HT app and does not replace it.
 
