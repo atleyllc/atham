@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="android:fontFamily">@font/jost</item>
         <item name="fontFamily">@font/jost
@@ -26,12 +26,14 @@
 
     <style name="Theme.KV4PHT" parent="Base.Theme.KV4PHT" />
 
-    <style name="Theme.ATHAM" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Theme.ATHAM" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@color/atham_black</item>
         <item name="android:navigationBarColor">@color/atham_black</item>
         <item name="android:windowBackground">@color/atham_black</item>
-        <item name="colorPrimary">@color/atham_text</item>
-        <item name="colorOnPrimary">@color/atham_black</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="colorPrimary">@color/atham_gold</item>
+        <item name="colorOnPrimary">@color/atham_text</item>
         <item name="android:textColor">@color/atham_text</item>
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
     </style>
