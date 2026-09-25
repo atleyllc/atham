@@ -125,6 +125,9 @@ public class RadioAudioService extends Service {
 
     // === Audio Constants ===
     public static final int AUDIO_SAMPLE_RATE = 16000;
+    /** Public firmware and the original app exchange 48 kHz Opus on command 0x07. */
+    public static final int OPUS_SAMPLE_RATE = 48000;
+    public static final int OPUS_FRAME_SIZE = 1920; // 40 ms at 48 kHz
     private static final int RX_AUDIO_CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_MONO;
     private static final int RX_AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
     public static final int AUDIO_FRAME_SAMPLES = 249; // One 128-byte mono IMA ADPCM audio block at 16kHz
@@ -172,7 +175,11 @@ public class RadioAudioService extends Service {
 
     // === Audio / 4-bit IMA ADPCM Handling ===
     private final short[] pcm16 = new short[AUDIO_FRAME_SAMPLES];
+    private final float[] pcmFloat = new float[OPUS_FRAME_SIZE];
+    private final OpusUtils.OpusDecoderWrapper opusDecoder =
+            new OpusUtils.OpusDecoderWrapper(OPUS_SAMPLE_RATE, OPUS_FRAME_SIZE);
     private AudioTrack audioTrack;
+    private AudioTrack opusAudioTrack;
     private float audioTrackVolume = 0.0f;
     private AudioFocusRequest audioFocusRequest;
     private boolean hasAudioFocus = false;
@@ -388,7 +395,8 @@ public class RadioAudioService extends Service {
                 return;
             }
             radioModule.stop();
-            audioTrack.stop();
+            stopPlaybackTrack(audioTrack);
+            stopPlaybackTrack(opusAudioTrack);
             if (!activeTransport.prepareForFirmwareFlashing()) {
                 Log.w(TAG, "USB transport could not enter firmware flashing mode.");
                 return;
@@ -629,11 +637,10 @@ public class RadioAudioService extends Service {
 
         closePortAndReset();
 
-        if (audioTrack != null) {
-            audioTrack.stop();
-            audioTrack.release();
-            audioTrack = null;
-        }
+        releasePlaybackTrack(audioTrack);
+        audioTrack = null;
+        releasePlaybackTrack(opusAudioTrack);
+        opusAudioTrack = null;
         abandonAudioFocus();
         stopVoiceCapture();
 
@@ -833,6 +840,10 @@ public class RadioAudioService extends Service {
             audioTrack.release();
             audioTrack = null;
         }
+        if (opusAudioTrack != null) {
+            opusAudioTrack.release();
+            opusAudioTrack = null;
+        }
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_MEDIA)
             .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
@@ -854,7 +865,49 @@ public class RadioAudioService extends Service {
         audioTrack.setVolume(0.0f);
         audioTrackVolume = 0.0f;
         audioTrack.setAuxEffectSendLevel(0.0f);
+        opusAudioTrack = buildPlaybackTrack(
+                OPUS_SAMPLE_RATE, AudioFormat.ENCODING_PCM_FLOAT, AudioFormat.CHANNEL_OUT_MONO,
+                Math.max(AudioTrack.getMinBufferSize(
+                        OPUS_SAMPLE_RATE, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_FLOAT),
+                        OPUS_FRAME_SIZE * 4));
+        opusAudioTrack.setVolume(0.0f);
+        opusAudioTrack.setAuxEffectSendLevel(0.0f);
         callbacks.audioTrackCreated();
+    }
+
+    private AudioTrack buildPlaybackTrack(int sampleRate, int encoding, int channelMask, int bufferSize) {
+        return new AudioTrack.Builder()
+            .setAudioAttributes(rxAudioAttributes())
+            .setAudioFormat(new AudioFormat.Builder()
+                .setEncoding(encoding)
+                .setSampleRate(sampleRate)
+                .setChannelMask(channelMask)
+                .build())
+            .setTransferMode(AudioTrack.MODE_STREAM)
+            .setBufferSizeInBytes(bufferSize)
+            .setPerformanceMode(AudioTrack.PERFORMANCE_MODE_LOW_LATENCY)
+            .build();
+    }
+
+    private AudioAttributes rxAudioAttributes() {
+        return new AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_MEDIA)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+            .build();
+    }
+
+    private void stopPlaybackTrack(AudioTrack track) {
+        if (track != null) {
+            track.stop();
+        }
+    }
+
+    private void releasePlaybackTrack(AudioTrack track) {
+        if (track == null) {
+            return;
+        }
+        track.stop();
+        track.release();
     }
 
     private void setTxRunAwayTimer() {
@@ -885,6 +938,7 @@ public class RadioAudioService extends Service {
             radioModule.pttDown();
             audioTrackVolume = 0.0f;
             Optional.ofNullable(audioTrack).ifPresent(t -> t.setVolume(0.0f));
+            Optional.ofNullable(opusAudioTrack).ifPresent(t -> t.setVolume(0.0f));
             startVoiceCapture();
             callbacks.txStarted();
         } else {
@@ -898,6 +952,7 @@ public class RadioAudioService extends Service {
             setMode(RadioMode.RX);
             audioTrackVolume = 0.0f;
             Optional.ofNullable(audioTrack).ifPresent(t -> t.setVolume(0.0f));
+            Optional.ofNullable(opusAudioTrack).ifPresent(t -> t.setVolume(0.0f));
             radioModule.pttUp();
             callbacks.txEnded();
         }
@@ -1152,9 +1207,8 @@ public class RadioAudioService extends Service {
             public void onError(Exception error) {
                 if (activeTransport == transport) {
                     Log.w(TAG, connectLog(transport.getName() + " transport error"), error);
-                    if (audioTrack != null) {
-                        audioTrack.stop();
-                    }
+                    stopPlaybackTrack(audioTrack);
+                    stopPlaybackTrack(opusAudioTrack);
                     radioMissing();
                 }
             }
@@ -1556,6 +1610,10 @@ public class RadioAudioService extends Service {
                 handleRxAudio(param, offset, len);
                 break;
 
+            case COMMAND_RX_AUDIO_OPUS:
+                handleLegacyOpusAudio(param, offset, len);
+                break;
+
             case COMMAND_WINDOW_UPDATE:
                 WindowUpdate.from(param, offset, len).ifPresent(windowAck ->
                     hostToEsp32.enlargeFlowControlWindow(windowAck.getSize()));
@@ -1661,7 +1719,25 @@ public class RadioAudioService extends Service {
 
         if ((getMode() == RadioMode.RX || getMode() == RadioMode.SCAN) && audioTrack != null) {
             audioTrack.write(pcm16, 0, decoded, AudioTrack.WRITE_NON_BLOCKING);
-            ensureAudioPlaying();
+            ensureAudioPlaying(audioTrack);
+        }
+    }
+
+    /**
+     * Plays the 48 kHz Opus stream used by public firmware and the original app (command 0x07).
+     */
+    private void handleLegacyOpusAudio(final ByteBuffer param, final int offset, final int len) {
+        if (param == null || !param.hasArray() || offset < 0 || len <= 0 || param.limit() < offset + len) {
+            return;
+        }
+        int decoded = opusDecoder.decode(param.array(), offset, len, pcmFloat);
+        if (decoded <= 0 || opusAudioTrack == null) {
+            return;
+        }
+        if (getMode() == RadioMode.RX || getMode() == RadioMode.SCAN) {
+            opusAudioTrack.write(pcmFloat, 0, decoded, AudioTrack.WRITE_NON_BLOCKING);
+            ensureAudioPlaying(opusAudioTrack);
+            requestAudioFocus();
         }
     }
 
@@ -1703,19 +1779,19 @@ public class RadioAudioService extends Service {
      * @see AudioTrack
      * @see AudioTrack#setVolume(float)
      */
-    private void ensureAudioPlaying() {
-        if (audioTrack.getPlayState() != AudioTrack.PLAYSTATE_PLAYING) {
+    private void ensureAudioPlaying(AudioTrack track) {
+        if (track.getPlayState() != AudioTrack.PLAYSTATE_PLAYING) {
             audioTrackVolume = 0;
-            audioTrack.setVolume(0.0f);
-            audioTrack.play();
+            track.setVolume(0.0f);
+            track.play();
         }
         float alpha = 0.02f;
         audioTrackVolume = alpha + (1.0f - alpha) * audioTrackVolume;
         if (audioTrackVolume > 0.7f) {
-            audioTrack.setVolume(audioTrackVolume);
+            track.setVolume(audioTrackVolume);
         }
         else {
-            audioTrack.setVolume(0.0f);
+            track.setVolume(0.0f);
         }
     }
 
