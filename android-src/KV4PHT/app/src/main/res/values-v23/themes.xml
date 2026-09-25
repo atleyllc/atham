@@ -3,8 +3,8 @@
         <item name="android:navigationBarColor">@color/atley_background</item>
         <item name="android:statusBarColor">@color/atley_background</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="colorPrimary">@color/atley_bronze</item>
-        <item name="colorOnPrimary">@color/atley_on_bronze</item>
+        <item name="colorPrimary">@color/accent_orange</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
         <item name="colorSecondary">@color/atley_titanium</item>
     </style>
 </resources>

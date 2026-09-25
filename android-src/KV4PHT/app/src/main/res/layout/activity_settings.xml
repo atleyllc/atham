@@ -41,6 +41,130 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/card_surface"
+                    android:elevation="2dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.12"
+                        android:text="@string/appearance"
+                        android:textAllCaps="true"
+                        android:textColor="@color/atley_muted"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/themeLight"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/pill_idle"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="themeLightClicked"
+                            android:text="@string/theme_light"
+                            android:textColor="@color/atley_foreground" />
+
+                        <TextView
+                            android:id="@+id/themeDark"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/pill_idle"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="themeDarkClicked"
+                            android:text="@string/theme_dark"
+                            android:textColor="@color/atley_foreground" />
+
+                        <TextView
+                            android:id="@+id/themeSystem"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/pill_idle"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:onClick="themeSystemClicked"
+                            android:text="@string/theme_system"
+                            android:textColor="@color/atley_foreground" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:letterSpacing="0.12"
+                        android:text="@string/accent_color"
+                        android:textAllCaps="true"
+                        android:textColor="@color/atley_muted"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/accentTeal"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/swatch_teal"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:onClick="accentTealClicked" />
+
+                        <View
+                            android:id="@+id/accentRose"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/swatch_rose"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:onClick="accentRoseClicked" />
+
+                        <View
+                            android:id="@+id/accentOrange"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/swatch_orange"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:onClick="accentOrangeClicked" />
+
+                        <View
+                            android:id="@+id/accentBlue"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/swatch_blue"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:onClick="accentBlueClicked" />
+                    </LinearLayout>
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -702,8 +826,8 @@
                     android:text="@string/done"
                     android:textSize="20dp"
                     android:textFontWeight="500"
-                    android:backgroundTint="@color/atley_bronze"
-                    android:textColor="@color/atley_on_bronze"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:textColor="@color/on_accent"
                     android:textAllCaps="false"
                     android:enabled="true"
                     android:onClick="doneButtonClicked"/>

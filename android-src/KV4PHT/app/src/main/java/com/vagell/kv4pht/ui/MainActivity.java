@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Appearance.apply(this);
         super.onCreate(savedInstanceState);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -210,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 // Highlight the tapped memory, unhighlight all the others.
                 viewModel.highlightMemory(memory);
                 memoriesAdapter.notifyDataSetChanged();
+                setModePills(false);
             }
 
             @Override
@@ -897,10 +899,14 @@ public class MainActivity extends AppCompatActivity {
                         startSettingsActivity();
                     }
                 })
-                .setBackgroundTint(getResources().getColor(R.color.atley_bronze))
-                .setTextColor(getResources().getColor(R.color.atley_on_bronze))
-                .setActionTextColor(getResources().getColor(R.color.black))
+                .setTextColor(getResources().getColor(R.color.on_accent))
+                .setActionTextColor(getResources().getColor(R.color.white))
                 .setAnchorView(findViewById(R.id.bottomNavigationView));
+        View snackbarView = callsignSnackbar.getView();
+        snackbarView.setBackgroundResource(R.drawable.snackbar_card);
+        ViewGroup.MarginLayoutParams snackParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
+        snackParams.setMargins(48, 0, 48, 24);
+        snackbarView.setLayoutParams(snackParams);
 
         // Make the text of the snackbar larger.
         TextView snackbarActionTextView = (TextView) callsignSnackbar.getView().findViewById(com.google.android.material.R.id.snackbar_action);
@@ -1302,6 +1308,7 @@ public class MainActivity extends AppCompatActivity {
         // Unhighlight all memory rows, since this is a simplex frequency.
         viewModel.highlightMemory(null);
         memoriesAdapter.notifyDataSetChanged();
+        setModePills(false);
     }
 
     /**
@@ -1320,6 +1327,7 @@ public class MainActivity extends AppCompatActivity {
 
                 showMemoryName(channelMemories.get(i).name);
                 showFrequency(activeFrequencyStr);
+                setModePills(false);
                 return;
             }
         }
@@ -1763,6 +1771,72 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void modeVfoClicked(View view) {
+        if (radioAudioService != null && radioAudioService.getMode() == RadioMode.SCAN) {
+            radioAudioService.setScanning(false, true);
+        }
+        setScanningUi(false);
+        if (radioAudioService != null) {
+            radioAudioService.setActiveMemoryId(-1);
+        }
+        if (activeFrequencyStr != null) {
+            tuneToFreqUi(activeFrequencyStr);
+        }
+        EditText frequency = findViewById(R.id.activeFrequency);
+        frequency.requestFocus();
+    }
+
+    public void modeMrClicked(View view) {
+        if (radioAudioService != null && radioAudioService.getMode() == RadioMode.SCAN) {
+            radioAudioService.setScanning(false, true);
+            setScanningUi(false);
+        }
+        List<ChannelMemory> memories = viewModel.getChannelMemories().getValue();
+        ChannelMemory selected = null;
+        if (memories != null) {
+            for (ChannelMemory memory : memories) {
+                if (memory.isHighlighted() || memory.memoryId == activeMemoryId) {
+                    selected = memory;
+                    break;
+                }
+            }
+            if (selected == null && !memories.isEmpty()) {
+                selected = memories.get(0);
+            }
+        }
+        if (selected != null) {
+            if (radioAudioService != null) {
+                radioAudioService.tuneToMemory(selected);
+            }
+            viewModel.highlightMemory(selected);
+            memoriesAdapter.notifyDataSetChanged();
+            tuneToMemoryUi(selected.memoryId);
+        }
+        setModePills(false);
+    }
+
+    public void modeScanClicked(View view) {
+        scanClicked(view);
+    }
+
+    private void setModePills(boolean scanning) {
+        TextView vfo = findViewById(R.id.modeVfo);
+        TextView mr = findViewById(R.id.modeMr);
+        TextView scan = findViewById(R.id.modeScan);
+        if (vfo == null || mr == null || scan == null) {
+            return;
+        }
+        boolean mrActive = !scanning && activeMemoryId > -1;
+        styleModePill(vfo, !scanning && !mrActive);
+        styleModePill(mr, mrActive);
+        styleModePill(scan, scanning);
+    }
+
+    private void styleModePill(TextView pill, boolean selected) {
+        pill.setBackgroundResource(selected ? R.drawable.pill_selected : R.drawable.pill_idle);
+        pill.setTextColor(getResources().getColor(selected ? R.color.on_accent : R.color.atley_foreground));
+    }
+
     @SuppressLint("MissingPermission")
     public void singleBeaconButtonClicked(View view) {
         if (null != radioAudioService && !radioAudioService.isTxAllowed()) {
@@ -1805,6 +1879,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        setModePills(scanning);
     }
 
     public void addMemoryClicked(View view) {
