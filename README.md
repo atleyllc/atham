@@ -36,9 +36,9 @@ Work is staged. Radio-critical USB, audio, PTT, firmware, and protocol code is n
 
 ## Current test build
 
-The current install is **atleyht-0.1.10-debug.apk** on the GitHub release `atleyht-0.1.10`.
+The current install is **atleyht-0.1.11-debug.apk** on the GitHub release `atleyht-0.1.11`.
 
-Download: https://github.com/atleyllc/atleyht/releases/download/atleyht-0.1.10/atleyht-0.1.10-debug.apk
+Download: https://github.com/atleyllc/atleyht/releases/download/atleyht-0.1.11/atleyht-0.1.11-debug.apk
 
 It is the official kv4p HT app (`com.vagell.kv4pht`) with public-firmware Opus receive audio and the card interface:
 
@@ -48,6 +48,7 @@ It is the official kv4p HT app (`com.vagell.kv4pht`) with public-firmware Opus r
 - Side panel for Voice, APRS chat, heard stations, radio settings, appearance, repeaters, and firmware
 - APRS messages show Sending until the other station acks or rejects them. Stations lists the newest position for each callsign with a Maidenhead grid. Beacons stay manual.
 - Radio mail is in the side panel. Inbox, drafts, outbox, sent, trash, archive, and flagged are local mailboxes. Search, reply, forward, flag, and check-in templates are in the client. Numbered packet lines addressed to you reassemble into the inbox. Extra callsigns separated by commas each get a copy, paced on the current frequency after you confirm. Email addresses stay in the outbox until a Winlink gateway session exists. ARDOP and VARA are not on this radio.
+- The launcher is the new Atley shell: graphite radio surface, status chip, frequency digits, squelch, phone volume, hold-to-talk, scan, and unkey. Spectrum, Data, Mail, and Log explain what KV4P cannot do yet. LEGACY opens the previous screen.
 - Activities lists what this KV4P connection can do. Winlink, FT8, JS8, packet BBS, and an RF waterfall stay off until that hardware and those engines exist.
 - Log stores contacts on the phone. Stop transmit drops PTT and releases the radio if voice and packet were fighting over it.
 - PTT sits in its own row, clear of the navigation
