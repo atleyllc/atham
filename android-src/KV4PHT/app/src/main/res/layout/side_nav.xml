@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="20dp"
-            android:text="@string/side_nav_title"
+            android:text="@string/activities_title"
+            android:onClick="navActivitiesClicked"
             android:textColor="@color/atley_foreground"
             android:textSize="28sp" />
 
@@ -86,6 +87,20 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="@string/radio_mail"
+            android:textColor="@color/atley_foreground"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/navLog"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/pill_idle"
+            android:gravity="center_vertical"
+            android:onClick="navLogClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/log_title"
             android:textColor="@color/atley_foreground"
             android:textSize="16sp" />
 
@@ -152,6 +167,20 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="@string/flash_firmware_menu_item"
+            android:textColor="@color/atley_foreground"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/navUnkey"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/pill_idle"
+            android:gravity="center_vertical"
+            android:onClick="navUnkeyClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/nav_unkey"
             android:textColor="@color/atley_foreground"
             android:textSize="16sp" />
     </LinearLayout>

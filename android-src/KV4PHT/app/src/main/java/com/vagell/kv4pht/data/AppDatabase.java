@@ -31,8 +31,8 @@ import com.vagell.kv4pht.data.migrations.*;
  * Singleton Room database for kv4p HT application.
  */
 @Database(
-    version = 10,
-    entities = {AppSetting.class, ChannelMemory.class, APRSMessage.class, RadioMailMessage.class, RadioMailStation.class}
+    version = 11,
+    entities = {AppSetting.class, ChannelMemory.class, APRSMessage.class, RadioMailMessage.class, RadioMailStation.class, Qso.class}
 )
 @SuppressWarnings("java:S6548")
 public abstract class AppDatabase extends RoomDatabase {
@@ -41,6 +41,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ChannelMemoryDao channelMemoryDao();
     public abstract APRSMessageDao aprsMessageDao();
     public abstract RadioMailDao radioMailDao();
+    public abstract QsoDao qsoDao();
 
     // Migrations
     public static final Migration MIGRATION_1_2 = new MigrationFrom1To2();
@@ -52,6 +53,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public static final Migration MIGRATION_7_8 = new MigrationFrom7To8();
     public static final Migration MIGRATION_8_9 = new MigrationFrom8To9();
     public static final Migration MIGRATION_9_10 = new MigrationFrom9To10();
+    public static final Migration MIGRATION_10_11 = new MigrationFrom10To11();
 
     @SuppressWarnings({"java:S3077", "java:S3008"})
     private static volatile AppDatabase INSTANCE;
@@ -86,7 +88,8 @@ public abstract class AppDatabase extends RoomDatabase {
                 MIGRATION_6_7,
                 MIGRATION_7_8,
                 MIGRATION_8_9,
-                MIGRATION_9_10
+                MIGRATION_9_10,
+                MIGRATION_10_11
             )
             // WARNING: This will delete all user data if migration is missing.
             // Remove or guard this call in production.

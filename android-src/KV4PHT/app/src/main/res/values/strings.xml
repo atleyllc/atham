@@ -95,6 +95,14 @@
     <string name="aprs_delivery_pending">Sending</string>
     <string name="aprs_delivery_rejected">Rejected</string>
     <string name="radio_mail">Radio mail</string>
+    <string name="activities_title">Activities</string>
+    <string name="log_title">Log</string>
+    <string name="log_call">Callsign</string>
+    <string name="log_frequency">Frequency</string>
+    <string name="log_mode">Mode</string>
+    <string name="log_notes">Notes</string>
+    <string name="log_save">Save contact</string>
+    <string name="nav_unkey">Stop transmit</string>
     <string name="radio_mail_help">Callsign mail transmits as numbered packet lines on the current frequency. Email addresses stay in the outbox until a Winlink gateway session exists.</string>
     <string name="mailboxes">Mailboxes</string>
     <string name="mail_inbox">Inbox</string>

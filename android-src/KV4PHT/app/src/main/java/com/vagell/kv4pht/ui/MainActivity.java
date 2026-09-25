@@ -974,6 +974,23 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, RadioMailActivity.class));
     }
 
+    public void navActivitiesClicked(View view) {
+        closeSideNav();
+        startActivity(new Intent(this, ActivitiesActivity.class));
+    }
+
+    public void navLogClicked(View view) {
+        closeSideNav();
+        startActivity(new Intent(this, LogActivity.class));
+    }
+
+    public void navUnkeyClicked(View view) {
+        if (radioAudioService != null) {
+            radioAudioService.forceUnkey();
+        }
+        closeSideNav();
+    }
+
     public void aprsMessagesClicked(View view) {
         showAprsPane(false);
     }
