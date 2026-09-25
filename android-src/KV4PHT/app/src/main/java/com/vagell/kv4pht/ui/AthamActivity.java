@@ -25,8 +25,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +40,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.vagell.kv4pht.R;
 import com.vagell.kv4pht.data.AppDatabase;
@@ -84,6 +92,8 @@ public class AthamActivity extends AppCompatActivity {
     private View sectionLog;
     private View sectionModules;
     private View sectionVoice;
+    private View sectionAppearance;
+    private Button activeNav;
 
     private final Runnable poll = new Runnable() {
         @Override
@@ -128,6 +138,8 @@ public class AthamActivity extends AppCompatActivity {
         sectionLog = findViewById(R.id.sectionLog);
         sectionModules = findViewById(R.id.sectionModules);
         sectionVoice = findViewById(R.id.sectionVoice);
+        sectionAppearance = findViewById(R.id.sectionAppearance);
+        activeNav = navHome;
     }
 
     private void wireActions() {
@@ -145,8 +157,17 @@ public class AthamActivity extends AppCompatActivity {
         findViewById(R.id.launchClassic).setOnClickListener(v -> openClassic());
         findViewById(R.id.moduleVoice).setOnClickListener(v -> showSection(sectionVoice, navModules));
         findViewById(R.id.modulePacket).setOnClickListener(v -> openClassic());
+        findViewById(R.id.moduleAppearance).setOnClickListener(v -> showSection(sectionAppearance, navModules));
         findViewById(R.id.moduleDevices).setOnClickListener(v ->
                 startActivity(new Intent(this, SettingsActivity.class)));
+        findViewById(R.id.themeDark).setOnClickListener(v -> chooseTheme(AthamAppearance.THEME_DARK));
+        findViewById(R.id.themeLight).setOnClickListener(v -> chooseTheme(AthamAppearance.THEME_LIGHT));
+        findViewById(R.id.themeSystem).setOnClickListener(v -> chooseTheme(AthamAppearance.THEME_SYSTEM));
+        findViewById(R.id.accentAnchor).setOnClickListener(v -> chooseAccent(AthamAppearance.ACCENT_ANCHOR));
+        findViewById(R.id.accentClay).setOnClickListener(v -> chooseAccent(AthamAppearance.ACCENT_CLAY));
+        findViewById(R.id.accentOrange).setOnClickListener(v -> chooseAccent(AthamAppearance.ACCENT_ORANGE));
+        findViewById(R.id.accentPurple).setOnClickListener(v -> chooseAccent(AthamAppearance.ACCENT_PURPLE));
+        findViewById(R.id.accentBlue).setOnClickListener(v -> chooseAccent(AthamAppearance.ACCENT_BLUE));
         findViewById(R.id.radioConnect).setOnClickListener(v -> connectRadio());
         findViewById(R.id.radioTune).setOnClickListener(v -> tune());
         findViewById(R.id.radioScan).setOnClickListener(v -> toggleScan());
@@ -181,14 +202,20 @@ public class AthamActivity extends AppCompatActivity {
         sectionLog.setVisibility(View.GONE);
         sectionModules.setVisibility(View.GONE);
         sectionVoice.setVisibility(View.GONE);
+        sectionAppearance.setVisibility(View.GONE);
         section.setVisibility(View.VISIBLE);
-        int muted = ContextCompat.getColor(this, R.color.atham_muted);
-        int gold = ContextCompat.getColor(this, R.color.atham_gold);
-        navHome.setTextColor(muted);
-        navRadio.setTextColor(muted);
-        navLog.setTextColor(muted);
-        navModules.setTextColor(muted);
-        nav.setTextColor(gold);
+        activeNav = nav;
+        render();
+    }
+
+    private void chooseTheme(int theme) {
+        AthamAppearance.setTheme(this, theme);
+        render();
+    }
+
+    private void chooseAccent(int accent) {
+        AthamAppearance.setAccent(this, accent);
+        render();
     }
 
     private void connectRadio() {
@@ -334,52 +361,178 @@ public class AthamActivity extends AppCompatActivity {
         radioFrequency.setText(frequency);
         modulesHint.setText(frequency + " MHz stays with you");
         voiceContext.setText(bandLabel() + "  ·  FM  ·  Simplex");
+        boolean dark = AthamAppearance.dark(this);
+        int ink = AthamAppearance.ink(dark);
+        int muted = AthamAppearance.muted(dark);
         boolean connected = radio != null && radio.isRadioConnected();
         RadioMode mode = radio == null ? null : radio.getMode();
+        String homeStatus = "Not connected";
+        String radioStatusText = scanning ? "Scanning" : "Not connected";
+        int statusColor = muted;
         if (!connected) {
-            deviceView.setText("KV4P HT");
-            homeConnection.setText("Not connected");
-            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_muted));
-            radioState.setText(scanning ? "Scanning" : "Not connected");
-            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_muted));
             radioSignal.setText(scanning
                     ? "Scan starts when a KV4P HT is connected."
                     : "Plug in a KV4P HT to tune, scan, and talk.");
         } else if (mode == RadioMode.TX) {
-            deviceView.setText("KV4P HT");
-            homeConnection.setText("Transmitting");
-            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_text));
-            radioState.setText("Transmitting");
-            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_text));
+            homeStatus = "Transmitting";
+            radioStatusText = "Transmitting";
+            statusColor = ink;
             radioSignal.setText("Release or tap Unkey.");
             pttButton.setText("Talking");
         } else if (mode == RadioMode.SCAN || scanning) {
-            deviceView.setText("KV4P HT");
-            homeConnection.setText("Scanning");
-            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_text));
-            radioState.setText("Scanning");
-            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_text));
+            homeStatus = "Scanning";
+            radioStatusText = "Scanning";
+            statusColor = ink;
             radioSignal.setText("Unkey stops the scan.");
         } else {
-            deviceView.setText("KV4P HT");
-            homeConnection.setText("Connected");
-            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_muted));
-            radioState.setText(mode == RadioMode.RX ? "Listening" : "Ready");
-            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_muted));
+            homeStatus = "Connected";
+            radioStatusText = mode == RadioMode.RX ? "Listening" : "Ready";
             radioSignal.setText("Hold to talk on " + frequency + ".");
         }
         if (mode != RadioMode.TX) {
             pttButton.setText("Hold to talk");
         }
+        deviceView.setText("KV4P HT");
+        homeConnection.setText(homeStatus);
+        radioState.setText(radioStatusText);
+        paintChrome(dark, ink, muted);
+        homeConnection.setTextColor(statusColor);
+        radioState.setTextColor(statusColor);
         if (contacts.isEmpty()) {
             logBody.setText("No contacts yet.");
+            logBody.setTextColor(muted);
         } else {
             StringBuilder builder = new StringBuilder();
             for (String contact : contacts) {
                 builder.append(contact).append("\n\n");
             }
             logBody.setText(builder.toString().trim());
+            logBody.setTextColor(ink);
         }
+    }
+
+    private void paintChrome(boolean dark, int ink, int muted) {
+        int accent = AthamAppearance.accentColor(AthamAppearance.accent(this));
+        int wash = AthamAppearance.accentWash(AthamAppearance.accent(this), dark);
+        int page = AthamAppearance.page(dark);
+        int card = AthamAppearance.card(dark);
+        float radius = dp(16);
+        float chipRadius = dp(22);
+
+        findViewById(R.id.athamRoot).setBackgroundColor(page);
+        findViewById(R.id.athamNav).setBackgroundColor(card);
+        findViewById(R.id.athamNavLine).setBackgroundColor(AthamAppearance.line(dark));
+        getWindow().setStatusBarColor(page);
+        getWindow().setNavigationBarColor(card);
+        WindowInsetsControllerCompat insets = WindowCompat.getInsetsController(getWindow(), findViewById(R.id.athamRoot));
+        insets.setAppearanceLightStatusBars(!dark);
+        insets.setAppearanceLightNavigationBars(!dark);
+
+        paintTagged(findViewById(R.id.athamRoot), ink, muted, accent, wash, card, radius);
+
+        Button[] navs = {navHome, navRadio, navLog, navModules};
+        for (Button nav : navs) {
+            nav.setTextColor(nav == activeNav ? accent : muted);
+            nav.setTypeface(null, nav == activeNav ? Typeface.BOLD : Typeface.NORMAL);
+        }
+
+        int theme = AthamAppearance.theme(this);
+        styleChoice(R.id.themeDark, theme == AthamAppearance.THEME_DARK, card, wash, ink, accent, chipRadius);
+        styleChoice(R.id.themeLight, theme == AthamAppearance.THEME_LIGHT, card, wash, ink, accent, chipRadius);
+        styleChoice(R.id.themeSystem, theme == AthamAppearance.THEME_SYSTEM, card, wash, ink, accent, chipRadius);
+
+        int selected = AthamAppearance.accent(this);
+        styleAccent(R.id.accentAnchorDot, R.id.accentAnchorLabel, AthamAppearance.ACCENT_ANCHOR, selected, card);
+        styleAccent(R.id.accentClayDot, R.id.accentClayLabel, AthamAppearance.ACCENT_CLAY, selected, card);
+        styleAccent(R.id.accentOrangeDot, R.id.accentOrangeLabel, AthamAppearance.ACCENT_ORANGE, selected, card);
+        styleAccent(R.id.accentPurpleDot, R.id.accentPurpleLabel, AthamAppearance.ACCENT_PURPLE, selected, card);
+        styleAccent(R.id.accentBlueDot, R.id.accentBlueLabel, AthamAppearance.ACCENT_BLUE, selected, card);
+        TextView caption = findViewById(R.id.accentCaption);
+        caption.setText(AthamAppearance.accentCaption(selected));
+        caption.setTextColor(muted);
+    }
+
+    private void paintTagged(View view, int ink, int muted, int accent, int wash, int card, float radius) {
+        Object tag = view.getTag();
+        if (tag instanceof String) {
+            String role = (String) tag;
+            if ("card".equals(role) || "card-ink".equals(role) || "card-muted".equals(role)) {
+                view.setBackground(AthamAppearance.rounded(card, radius));
+                ViewCompat.setBackgroundTintList(view, null);
+            } else if ("wash".equals(role)) {
+                view.setBackground(AthamAppearance.rounded(wash, radius));
+                ViewCompat.setBackgroundTintList(view, null);
+                if (view instanceof TextView) {
+                    ((TextView) view).setTextColor(accent);
+                }
+            } else if ("field".equals(role) && view instanceof EditText) {
+                EditText field = (EditText) view;
+                field.setBackground(AthamAppearance.rounded(card, radius));
+                ViewCompat.setBackgroundTintList(field, null);
+                field.setTextColor(ink);
+                field.setHintTextColor(muted);
+            }
+            if (view instanceof TextView) {
+                TextView text = (TextView) view;
+                if ("ink".equals(role) || "card-ink".equals(role)) {
+                    text.setTextColor(ink);
+                } else if ("muted".equals(role) || "card-muted".equals(role)) {
+                    text.setTextColor(muted);
+                } else if ("accent".equals(role)) {
+                    text.setTextColor(accent);
+                }
+            }
+        }
+        if (view instanceof Button) {
+            Button button = (Button) view;
+            button.setAllCaps(false);
+            button.setStateListAnimator(null);
+            if (button.getText() != null && button.getText().toString().contains("\n")) {
+                button.setSingleLine(false);
+                button.setMaxLines(3);
+            }
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int i = 0; i < group.getChildCount(); i++) {
+                paintTagged(group.getChildAt(i), ink, muted, accent, wash, card, radius);
+            }
+        }
+    }
+
+    private void styleChoice(int id, boolean selected, int card, int wash, int ink, int accent, float radius) {
+        Button button = findViewById(id);
+        button.setBackground(AthamAppearance.rounded(selected ? wash : card, radius));
+        ViewCompat.setBackgroundTintList(button, null);
+        button.setTextColor(selected ? accent : ink);
+        button.setTypeface(null, selected ? Typeface.BOLD : Typeface.NORMAL);
+    }
+
+    private void styleAccent(int dotId, int labelId, int accentId, int selected, int page) {
+        View dot = findViewById(dotId);
+        int color = AthamAppearance.accentColor(accentId);
+        GradientDrawable fill = new GradientDrawable();
+        fill.setShape(GradientDrawable.OVAL);
+        fill.setColor(color);
+        if (accentId == selected) {
+            GradientDrawable ring = new GradientDrawable();
+            ring.setShape(GradientDrawable.OVAL);
+            ring.setColor(page);
+            ring.setStroke(Math.round(dp(2)), color);
+            int inset = Math.round(dp(5));
+            LayerDrawable layers = new LayerDrawable(new android.graphics.drawable.Drawable[] {ring, fill});
+            layers.setLayerInset(1, inset, inset, inset, inset);
+            dot.setBackground(layers);
+        } else {
+            dot.setBackground(fill);
+        }
+        TextView label = findViewById(labelId);
+        label.setTextColor(accentId == selected ? color : AthamAppearance.muted(AthamAppearance.dark(this)));
+        label.setTypeface(null, accentId == selected ? Typeface.BOLD : Typeface.NORMAL);
+    }
+
+    private float dp(float value) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, getResources().getDisplayMetrics());
     }
 
     private String bandLabel() {
