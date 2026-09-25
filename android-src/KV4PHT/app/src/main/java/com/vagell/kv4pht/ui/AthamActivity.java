@@ -266,7 +266,7 @@ public class AthamActivity extends AppCompatActivity {
     private boolean handlePtt(MotionEvent event) {
         if (radio == null || !radio.isRadioConnected()) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                radioSignal.setText("PTT blocked. Connect a KV4P HT first.");
+                radioSignal.setText("Connect a KV4P HT before talking.");
             }
             return true;
         }
@@ -330,49 +330,49 @@ public class AthamActivity extends AppCompatActivity {
     private void render() {
         callsignView.setText(callsign);
         frequencyView.setText(frequency);
-        homeFrequency.setText(frequency + " MHz");
+        homeFrequency.setText(frequency);
         radioFrequency.setText(frequency);
-        modulesHint.setText("Radio stays on " + frequency);
-        voiceContext.setText(bandLabel() + "  ·  FM  ·  SIMPLEX  ·  " + frequency + " MHz");
+        modulesHint.setText(frequency + " MHz stays with you");
+        voiceContext.setText(bandLabel() + "  ·  FM  ·  Simplex");
         boolean connected = radio != null && radio.isRadioConnected();
         RadioMode mode = radio == null ? null : radio.getMode();
         if (!connected) {
-            deviceView.setText("KV4P HT  ·  FM");
-            homeConnection.setText("Disconnected");
-            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_err));
-            radioState.setText(scanning ? "SCAN" : "DISCONNECTED");
-            radioState.setTextColor(ContextCompat.getColor(this, scanning ? R.color.atham_gold : R.color.atham_err));
+            deviceView.setText("KV4P HT");
+            homeConnection.setText("Not connected");
+            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_muted));
+            radioState.setText(scanning ? "Scanning" : "Not connected");
+            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_muted));
             radioSignal.setText(scanning
-                    ? "Scan is armed. It runs after a KV4P HT connects."
-                    : "USB detached. PTT stays blocked until a KV4P HT is connected.");
+                    ? "Scan starts when a KV4P HT is connected."
+                    : "Plug in a KV4P HT to tune, scan, and talk.");
         } else if (mode == RadioMode.TX) {
-            deviceView.setText("KV4P HT  ·  TX");
+            deviceView.setText("KV4P HT");
             homeConnection.setText("Transmitting");
-            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_tx));
-            radioState.setText("TRANSMIT");
-            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_tx));
-            radioSignal.setText("Keyed. Release PTT or tap UNKEY.");
-            pttButton.setText("PTT HELD");
+            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_text));
+            radioState.setText("Transmitting");
+            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_text));
+            radioSignal.setText("Release or tap Unkey.");
+            pttButton.setText("Talking");
         } else if (mode == RadioMode.SCAN || scanning) {
-            deviceView.setText("KV4P HT  ·  SCAN");
+            deviceView.setText("KV4P HT");
             homeConnection.setText("Scanning");
-            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_gold));
-            radioState.setText("SCAN");
-            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_gold));
-            radioSignal.setText("Scanning memories. UNKEY stops the scan.");
+            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_text));
+            radioState.setText("Scanning");
+            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_text));
+            radioSignal.setText("Unkey stops the scan.");
         } else {
-            deviceView.setText("KV4P HT  ·  FM");
+            deviceView.setText("KV4P HT");
             homeConnection.setText("Connected");
-            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_rx));
-            radioState.setText(mode == RadioMode.RX ? "RECEIVE" : "READY");
-            radioState.setTextColor(ContextCompat.getColor(this, mode == RadioMode.RX ? R.color.atham_rx : R.color.atham_muted));
-            radioSignal.setText("Squelch 2. Tone off. Hold PTT to transmit on " + frequency + ".");
+            homeConnection.setTextColor(ContextCompat.getColor(this, R.color.atham_muted));
+            radioState.setText(mode == RadioMode.RX ? "Listening" : "Ready");
+            radioState.setTextColor(ContextCompat.getColor(this, R.color.atham_muted));
+            radioSignal.setText("Hold to talk on " + frequency + ".");
         }
         if (mode != RadioMode.TX) {
-            pttButton.setText("HOLD TO TALK");
+            pttButton.setText("Hold to talk");
         }
         if (contacts.isEmpty()) {
-            logBody.setText("No contacts yet. VoiceLog drafts stay here after you finalize them.");
+            logBody.setText("No contacts yet.");
         } else {
             StringBuilder builder = new StringBuilder();
             for (String contact : contacts) {
