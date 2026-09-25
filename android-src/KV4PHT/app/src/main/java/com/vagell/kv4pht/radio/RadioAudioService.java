@@ -73,6 +73,7 @@ import com.vagell.kv4pht.aprs.parser.Position;
 import com.vagell.kv4pht.aprs.parser.PositionField;
 import com.vagell.kv4pht.data.ChannelMemory;
 import com.vagell.kv4pht.firmware.FirmwareUtils;
+import com.vagell.kv4pht.session.SessionCoordinator;
 import com.vagell.kv4pht.javAX25.ax25.Packet;
 import com.vagell.kv4pht.radio.Protocol.KissParser;
 import com.vagell.kv4pht.radio.Protocol.RcvCommand;
@@ -201,6 +202,7 @@ public class RadioAudioService extends Service {
     private Protocol.Sender hostToEsp32;
     @Getter
     private final RadioModuleController radioModule = new RadioModuleController();
+    private final SessionCoordinator sessions = new SessionCoordinator();
     private final KissParser esp32DataStreamParser = new KissParser(this::handleParsedCommand, this::handleEsp32Ax25Packet);
     private int usbConnectAttemptSeq = 0;
     private int activeUsbConnectAttemptId = 0;
@@ -935,7 +937,7 @@ public class RadioAudioService extends Service {
             radioMissing();
             return;
         }
-        if (mode == RadioMode.RX && isTxAllowed()) {
+        if (mode == RadioMode.RX && isTxAllowed() && sessions.tryAcquire(SessionCoordinator.Owner.VOICE)) {
             txAudioEncoder.reset();
             setMode(RadioMode.TX);
             callbacks.sMeterUpdate(0);
@@ -952,6 +954,7 @@ public class RadioAudioService extends Service {
     }
 
     public void endPtt() {
+        sessions.release(SessionCoordinator.Owner.VOICE);
         if (mode == RadioMode.TX) {
             stopVoiceCapture();
             setMode(RadioMode.RX);
@@ -1338,8 +1341,15 @@ public class RadioAudioService extends Service {
     }
 
     // Called in many situations where radio connection is found to be broken
+    public void forceUnkey() {
+        sessions.forceUnkey();
+        endPtt();
+    }
+
     private void radioMissing() {
         Log.i(TAG, connectLog("radioMissing(): state=" + connectionStateSummary()));
+        sessions.forceUnkey();
+        endPtt();
         stopVoiceCapture();
         closePortAndReset();
         notifyRadioMissing();
@@ -2126,6 +2136,10 @@ public class RadioAudioService extends Service {
             Log.e(TAG, "Tried to send an AX.25 packet when tx is not allowed, did not send.");
             return;
         }
+        if (!sessions.tryAcquire(SessionCoordinator.Owner.PACKET)) {
+            Log.e(TAG, "Tried to send an AX.25 packet while another session owns the radio.");
+            return;
+        }
         if (getMode() != RadioMode.RX) {
             Log.e(TAG, "Tried to send an AX.25 packet when radio was not in RX mode, did not send.");
             return;
@@ -2136,8 +2150,12 @@ public class RadioAudioService extends Service {
             return;
         }
         Log.d(TAG, "Sending AX25 packet: " + ax25Packet);
-        sender.txAx25(ax25Packet.bytesWithoutCRC());
-        Log.i(TAG, "Send AX25 packet: " + ax25Packet);
+        try {
+            sender.txAx25(ax25Packet.bytesWithoutCRC());
+            Log.i(TAG, "Send AX25 packet: " + ax25Packet);
+        } finally {
+            sessions.release(SessionCoordinator.Owner.PACKET);
+        }
     }
 
     public int getAudioTrackSessionId() {

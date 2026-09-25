@@ -77,6 +77,18 @@ Do not add a dependency unless its license is GPL-3.0-compatible (GPL-3, Apache-
 
 Arduino core and Espressif toolchain are installed by PlatformIO (`espressif32 @ 6.10.0`).
 
+## Engines not imported
+
+These are recorded so a later phase can add them only after a pinned commit, an Android build proof, and notices in the distributed APK. No source from them is in this tree.
+
+| Project | License posture | Status |
+| --- | --- | --- |
+| Pat / wl2k-go | MIT | Not imported. Required before a real Winlink B2F session |
+| Direwolf | GPL | Not imported. AX.25 stays on esp32-afsk plus the vendored javAX25 parser |
+| WSJT-X | GPL | Not imported. No FT8 encoder or decoder |
+| JS8Call / FLDigi | GPL, confirm per mode | Not imported |
+| Hamlib | LGPL | Not imported. KV4P does not use CAT |
+
 ## Privacy
 
 No analytics, accounts, advertising, or telemetry should be added. RepeaterBook uses the user's existing website session in a WebView; that is an upstream feature, not an Atley account system.

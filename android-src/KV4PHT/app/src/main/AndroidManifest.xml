@@ -62,6 +62,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.ActivitiesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.KV4PHT" />
+        <activity
+            android:name=".ui.LogActivity"
+            android:exported="false"
+            android:theme="@style/Theme.KV4PHT"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.RadioMailActivity"
             android:exported="false"
             android:theme="@style/Theme.KV4PHT"
