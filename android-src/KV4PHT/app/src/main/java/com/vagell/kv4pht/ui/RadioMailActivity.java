@@ -12,6 +12,10 @@ the Free Software Foundation, either version 3 of the License, or
 package com.vagell.kv4pht.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +37,9 @@ import com.vagell.kv4pht.mail.RadioMail;
 import com.vagell.kv4pht.radio.RadioAudioService;
 import com.vagell.kv4pht.radio.RadioServiceConnector;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,6 +56,8 @@ public class RadioMailActivity extends AppCompatActivity {
     private RadioMailMessage openMessage;
     private MailAdapter mailAdapter;
     private StationAdapter stationAdapter;
+    private final List<RadioMailMessage> visible = new ArrayList<>();
+    private final Handler main = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,11 @@ public class RadioMailActivity extends AppCompatActivity {
         stationList.setLayoutManager(new LinearLayoutManager(this));
         stationAdapter = new StationAdapter();
         stationList.setAdapter(stationAdapter);
+        ((EditText) findViewById(R.id.mailSearch)).addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) { applyFilter(); }
+            @Override public void afterTextChanged(Editable s) {}
+        });
         connector = new RadioServiceConnector(this);
         connector.bind(service -> radio = service);
         refreshCounts();
@@ -133,12 +146,20 @@ public class RadioMailActivity extends AppCompatActivity {
         if (address.isEmpty() || (subject.isEmpty() && body.isEmpty())) {
             return;
         }
-        if (RadioMail.isEmail(address)) {
-            store(address, subject, body, RadioMailMessage.OUTBOX, getString(R.string.mail_held_for_winlink));
-            return;
+        List<String> recipients = RadioMail.recipients(address);
+        boolean anyCall = false;
+        for (String recipient : recipients) {
+            if (RadioMail.isEmail(recipient)) {
+                continue;
+            }
+            if (!RadioMail.isCallsign(recipient)) {
+                new MaterialAlertDialogBuilder(this).setMessage(R.string.mail_bad_address).setPositiveButton(android.R.string.ok, null).show();
+                return;
+            }
+            anyCall = true;
         }
-        if (!RadioMail.isCallsign(address)) {
-            new MaterialAlertDialogBuilder(this).setMessage(R.string.mail_bad_address).setPositiveButton(android.R.string.ok, null).show();
+        if (!anyCall) {
+            store(address, subject, body, RadioMailMessage.OUTBOX, getString(R.string.mail_held_for_winlink));
             return;
         }
         new MaterialAlertDialogBuilder(this)
@@ -153,10 +174,48 @@ public class RadioMailActivity extends AppCompatActivity {
         if (openMessage == null) {
             return;
         }
-        ((EditText) findViewById(R.id.mailTo)).setText(openMessage.address);
-        ((EditText) findViewById(R.id.mailSubject)).setText(openMessage.subject != null && openMessage.subject.startsWith("Re:") ? openMessage.subject : "Re: " + openMessage.subject);
-        ((EditText) findViewById(R.id.mailBody)).setText("\n\n" + openMessage.body);
-        show(R.id.mailComposer);
+        String address = openMessage.address;
+        String subject = openMessage.subject != null && openMessage.subject.startsWith("Re:") ? openMessage.subject : "Re: " + openMessage.subject;
+        String body = "\n\n" + openMessage.body;
+        openMessage = null;
+        fillComposer(address, subject, body);
+    }
+
+    public void forwardClicked(View view) {
+        if (openMessage == null) {
+            return;
+        }
+        String subject = openMessage.subject != null && openMessage.subject.startsWith("Fwd:") ? openMessage.subject : "Fwd: " + openMessage.subject;
+        String body = "\n\n" + openMessage.body;
+        openMessage = null;
+        fillComposer("", subject, body);
+    }
+
+    public void unreadClicked(View view) {
+        if (openMessage == null) {
+            return;
+        }
+        openMessage.unread = true;
+        persist(openMessage, () -> backToList(null));
+    }
+
+    public void resendClicked(View view) {
+        if (openMessage == null) {
+            return;
+        }
+        transmit(openMessage.address, openMessage.subject, openMessage.body);
+    }
+
+    public void templateCheckIn(View view) {
+        fillTemplate(R.string.mail_template_check_in_subject, R.string.mail_template_check_in_body);
+    }
+
+    public void templateWelfare(View view) {
+        fillTemplate(R.string.mail_template_welfare_subject, R.string.mail_template_welfare_body);
+    }
+
+    public void templateWeather(View view) {
+        fillTemplate(R.string.mail_template_weather_subject, R.string.mail_template_weather_body);
     }
 
     public void flagClicked(View view) {
@@ -211,19 +270,65 @@ public class RadioMailActivity extends AppCompatActivity {
     }
 
     private void transmit(String address, String subject, String body) {
-        if (radio == null || !radio.isTxAllowed()) {
-            store(address, subject, body, RadioMailMessage.OUTBOX, getString(R.string.mail_tx_not_allowed));
-            return;
-        }
-        boolean failed = false;
-        for (String packet : RadioMail.packets(subject, body)) {
-            if (radio.sendChatMessage(address.toUpperCase(), packet) < 0) {
-                failed = true;
-                break;
+        List<String> calls = new ArrayList<>();
+        boolean heldEmail = false;
+        for (String recipient : RadioMail.recipients(address)) {
+            if (RadioMail.isEmail(recipient)) {
+                heldEmail = true;
+            } else if (RadioMail.isCallsign(recipient)) {
+                calls.add(recipient.toUpperCase());
             }
         }
-        store(address, subject, body, failed ? RadioMailMessage.OUTBOX : RadioMailMessage.SENT,
-                getString(failed ? R.string.mail_send_failed : R.string.mail_sent_on_frequency));
+        if (calls.isEmpty() || radio == null || !radio.isTxAllowed()) {
+            store(address, subject, body, RadioMailMessage.OUTBOX,
+                    getString(calls.isEmpty() ? R.string.mail_held_for_winlink : R.string.mail_tx_not_allowed));
+            return;
+        }
+        List<String> packets = RadioMail.packets(subject, body);
+        boolean emailNote = heldEmail;
+        sendAt(address, subject, body, calls, packets, 0, 0, false, emailNote);
+    }
+
+    private void sendAt(String address, String subject, String body, List<String> calls, List<String> packets,
+                         int callIndex, int packetIndex, boolean failed, boolean heldEmail) {
+        if (failed || callIndex >= calls.size()) {
+            String status = getString(failed ? R.string.mail_send_failed : R.string.mail_sent_on_frequency);
+            if (!failed && heldEmail) {
+                status = status + " " + getString(R.string.mail_held_for_winlink);
+            }
+            if (!failed) {
+                status = status + " " + getString(R.string.mail_packet_count, packets.size() * calls.size());
+            }
+            store(address, subject, body, failed ? RadioMailMessage.OUTBOX : RadioMailMessage.SENT, status.trim());
+            return;
+        }
+        if (packetIndex >= packets.size()) {
+            sendAt(address, subject, body, calls, packets, callIndex + 1, 0, false, heldEmail);
+            return;
+        }
+        int result = radio.sendChatMessage(calls.get(callIndex), packets.get(packetIndex));
+        if (result < 0) {
+            sendAt(address, subject, body, calls, packets, callIndex, packetIndex, true, heldEmail);
+            return;
+        }
+        main.postDelayed(() -> sendAt(address, subject, body, calls, packets, callIndex, packetIndex + 1, false, heldEmail), 900);
+    }
+
+    private void fillComposer(String address, String subject, String body) {
+        ((EditText) findViewById(R.id.mailTo)).setText(address);
+        ((EditText) findViewById(R.id.mailSubject)).setText(subject);
+        ((EditText) findViewById(R.id.mailBody)).setText(body);
+        show(R.id.mailComposer);
+    }
+
+    private void fillTemplate(int subject, int body) {
+        if (text(R.id.mailSubject).trim().isEmpty()) {
+            ((EditText) findViewById(R.id.mailSubject)).setText(subject);
+        }
+        EditText bodyField = findViewById(R.id.mailBody);
+        if (bodyField.getText().toString().trim().isEmpty()) {
+            bodyField.setText(body);
+        }
     }
 
     private void storeComposer(int target, String status) {
@@ -267,7 +372,7 @@ public class RadioMailActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 rows.clear();
                 rows.addAll(loaded);
-                mailAdapter.notifyDataSetChanged();
+                applyFilter();
             });
         });
     }
@@ -286,6 +391,7 @@ public class RadioMailActivity extends AppCompatActivity {
     private void refreshCounts() {
         io.execute(() -> {
             int inbox = dao().count(RadioMailMessage.INBOX);
+            int inboxNew = dao().unreadCount(RadioMailMessage.INBOX);
             int drafts = dao().count(RadioMailMessage.DRAFT);
             int outbox = dao().count(RadioMailMessage.OUTBOX);
             int sent = dao().count(RadioMailMessage.SENT);
@@ -293,7 +399,11 @@ public class RadioMailActivity extends AppCompatActivity {
             int archive = dao().count(RadioMailMessage.ARCHIVE);
             int flagged = dao().flaggedCount();
             runOnUiThread(() -> {
-                label(R.id.rowInbox, R.string.mail_inbox, inbox);
+                String inboxLabel = getString(R.string.mail_inbox) + (inbox == 0 ? "" : "    " + inbox);
+                if (inboxNew > 0) {
+                    inboxLabel = inboxLabel + "  ·  " + getString(R.string.mail_new_count, inboxNew);
+                }
+                ((TextView) findViewById(R.id.rowInbox)).setText(inboxLabel);
                 label(R.id.rowDrafts, R.string.mail_drafts, drafts);
                 label(R.id.rowOutbox, R.string.mail_outbox, outbox);
                 label(R.id.rowSent, R.string.mail_sent, sent);
@@ -302,6 +412,18 @@ public class RadioMailActivity extends AppCompatActivity {
                 label(R.id.rowFlagged, R.string.mail_flagged, flagged);
             });
         });
+    }
+
+    private void applyFilter() {
+        String query = text(R.id.mailSearch);
+        visible.clear();
+        for (RadioMailMessage message : rows) {
+            if (RadioMail.matches(message.address, message.subject, message.body, query)) {
+                visible.add(message);
+            }
+        }
+        findViewById(R.id.mailEmpty).setVisibility(visible.isEmpty() ? View.VISIBLE : View.GONE);
+        mailAdapter.notifyDataSetChanged();
     }
 
     private void label(int id, int name, int count) {
@@ -322,7 +444,8 @@ public class RadioMailActivity extends AppCompatActivity {
         message.unread = false;
         ((TextView) findViewById(R.id.readerSubject)).setText(message.subject);
         ((TextView) findViewById(R.id.readerAddress)).setText(message.address);
-        ((TextView) findViewById(R.id.readerStatus)).setText(message.status);
+        String when = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(new Date(message.createdAt));
+        ((TextView) findViewById(R.id.readerStatus)).setText(when + (message.status == null || message.status.isEmpty() ? "" : "  ·  " + message.status));
         ((TextView) findViewById(R.id.readerBody)).setText(message.body);
         show(R.id.mailReader);
         io.execute(() -> dao().update(message));
@@ -345,16 +468,17 @@ public class RadioMailActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull Holder holder, int position) {
-            RadioMailMessage message = rows.get(position);
+            RadioMailMessage message = visible.get(position);
             holder.address.setText((message.unread ? "● " : "") + message.address);
             holder.subject.setText(message.flagged ? "⚑ " + message.subject : message.subject);
-            holder.status.setText(message.status);
+            String when = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(new Date(message.createdAt));
+            holder.status.setText(when + (message.status == null || message.status.isEmpty() ? "" : "  ·  " + message.status));
             holder.itemView.setOnClickListener(v -> openReader(message));
         }
 
         @Override
         public int getItemCount() {
-            return rows.size();
+            return visible.size();
         }
 
         class Holder extends RecyclerView.ViewHolder {
@@ -387,13 +511,22 @@ public class RadioMailActivity extends AppCompatActivity {
             holder.label.setText((station.favorite ? "★ " : "") + station.callsign + "  " + station.transport
                     + (station.note == null || station.note.isEmpty() ? "" : "\n" + station.note));
             holder.label.setOnClickListener(v -> {
-                ((EditText) findViewById(R.id.mailTo)).setText(station.callsign);
-                show(R.id.mailComposer);
+                openMessage = null;
+                fillComposer(station.callsign, "", "");
             });
             holder.label.setOnLongClickListener(v -> {
-                station.favorite = !station.favorite;
-                io.execute(() -> dao().update(station));
-                reloadStations();
+                new MaterialAlertDialogBuilder(RadioMailActivity.this)
+                        .setTitle(station.callsign)
+                        .setItems(new CharSequence[]{getString(R.string.mail_favorite_station), getString(R.string.mail_remove_station)}, (d, which) -> {
+                            if (which == 0) {
+                                station.favorite = !station.favorite;
+                                io.execute(() -> dao().update(station));
+                            } else {
+                                io.execute(() -> dao().delete(station));
+                            }
+                            reloadStations();
+                        })
+                        .show();
                 return true;
             });
         }

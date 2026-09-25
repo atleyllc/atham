@@ -1,6 +1,7 @@
 package com.vagell.kv4pht.data;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -23,6 +24,9 @@ public interface RadioMailDao {
     @Query("SELECT COUNT(*) FROM radio_mail WHERE flagged = 1 AND folder != 4")
     int flaggedCount();
 
+    @Query("SELECT COUNT(*) FROM radio_mail WHERE folder = :folder AND unread = 1")
+    int unreadCount(int folder);
+
     @Insert
     long insert(RadioMailMessage message);
 
@@ -40,4 +44,7 @@ public interface RadioMailDao {
 
     @Update
     void update(RadioMailStation station);
+
+    @Delete
+    void delete(RadioMailStation station);
 }

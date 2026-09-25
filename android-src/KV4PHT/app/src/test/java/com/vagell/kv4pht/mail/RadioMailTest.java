@@ -31,4 +31,25 @@ public class RadioMailTest {
     public void emptyMailSendsNothing() {
         assertEquals(0, RadioMail.packets("", "  ").size());
     }
+
+    @Test
+    public void reassemblesNumberedLinesAndIgnoresChat() {
+        RadioMail.Assembler box = new RadioMail.Assembler();
+        assertEquals(null, box.offer("W6MOW", "see you on the net"));
+        assertEquals(null, box.offer("W6MOW", "1/2 Net | hello "));
+        String joined = box.offer("W6MOW", "2/2 there");
+        assertEquals("Net | hello there", joined);
+        String[] pieces = RadioMail.subjectAndBody(joined);
+        assertEquals("Net", pieces[0]);
+        assertEquals("hello there", pieces[1]);
+        assertEquals(null, box.offer("W6MOW", "1/2 Net | hello "));
+        assertEquals(null, box.offer("W6MOW", "2/2 there"));
+    }
+
+    @Test
+    public void splitsCopiesAndSearches() {
+        assertEquals(2, RadioMail.recipients("KO6SAB, W6MOW-1").size());
+        assertTrue(RadioMail.matches("KO6SAB", "Net", "hello", "net"));
+        assertFalse(RadioMail.matches("KO6SAB", "Net", "hello", "weather"));
+    }
 }

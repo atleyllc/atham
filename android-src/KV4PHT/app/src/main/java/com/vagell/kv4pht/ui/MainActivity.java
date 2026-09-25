@@ -88,6 +88,8 @@ import com.vagell.kv4pht.aprs.parser.WeatherField;
 import com.vagell.kv4pht.data.APRSMessage;
 import com.vagell.kv4pht.data.AppSetting;
 import com.vagell.kv4pht.data.ChannelMemory;
+import com.vagell.kv4pht.data.RadioMailMessage;
+import com.vagell.kv4pht.mail.RadioMail;
 import com.vagell.kv4pht.databinding.ActivityMainBinding;
 import com.vagell.kv4pht.radio.RadioAudioService;
 import com.vagell.kv4pht.radio.RadioModuleController;
@@ -843,11 +845,32 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     viewModel.getAppDb().aprsMessageDao().insertAll(aprsMessage);
+                    fileRadioMail(aprsMessage);
                 }
 
                 viewModel.loadDataAsync(() -> runOnUiThread(() -> aprsAdapter.notifyDataSetChanged()));
             }
         });
+    }
+
+    private void fileRadioMail(APRSMessage aprsMessage) {
+        if (aprsMessage.type != APRSMessage.MESSAGE_TYPE || aprsMessage.msgBody == null) {
+            return;
+        }
+        String joined = RadioMail.inbox().offer(aprsMessage.fromCallsign, aprsMessage.msgBody);
+        if (joined == null) {
+            return;
+        }
+        String[] pieces = RadioMail.subjectAndBody(joined);
+        RadioMailMessage mail = new RadioMailMessage();
+        mail.folder = RadioMailMessage.INBOX;
+        mail.address = aprsMessage.fromCallsign;
+        mail.subject = pieces[0];
+        mail.body = pieces[1];
+        mail.createdAt = System.currentTimeMillis();
+        mail.unread = true;
+        mail.status = "Packet";
+        viewModel.getAppDb().radioMailDao().insert(mail);
     }
 
     private enum ScreenType {
