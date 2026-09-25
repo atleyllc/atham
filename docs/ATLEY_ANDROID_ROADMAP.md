@@ -2,6 +2,8 @@
 
 Working name: **AtleyHT**. Repository: `atleyllc/atleyht`. Foundation: official kv4p HT (`VanceVagell/kv4p-ht`), GPL-3.0. This is not a greenfield rewrite.
 
+The September 2026 product plan is [ATLEY_HT_MASTER_PLAN.md](ATLEY_HT_MASTER_PLAN.md). The file-level audit and the work that must be approved before new protocols is [phase0/AUDIT.md](phase0/AUDIT.md). Stages below remain the KV4P engineering notes.
+
 Hardware facts that constrain the plan:
 
 - Radio module is SA818 VHF **or** UHF, never dual-band.
