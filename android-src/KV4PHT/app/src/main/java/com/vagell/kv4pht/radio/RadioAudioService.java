@@ -478,6 +478,10 @@ public class RadioAudioService extends Service {
      * Bound activities should call this when they're done providing any data (via setters), including the several
      * necessary callback handlers.
      */
+    public void setCallbacks(RadioAudioServiceCallbacks callbacks) {
+        this.callbacks = callbacks == null ? NO_OP_CALLBACKS : callbacks;
+    }
+
     public void start() {
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         createNotificationChannels();
