@@ -7,11 +7,11 @@ android {
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.vagell.kv4pht"
+        applicationId "com.vagell.kv4pht.atham"
         minSdk 26
         targetSdk 36
-        versionCode 54
-        versionName "2.0.0.1"
+        versionCode 4
+        versionName "0.3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

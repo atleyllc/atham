@@ -3,11 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="medium_gray">#FF353533</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#FFFCEA</color>
+    <color name="primary">#FF1C2430</color>
     <color name="clear">#00FFFFFF</color>
-    <color name="primary_deselected">#CEFFFCEA</color>
-    <color name="primary_veryfaint">#0DFFFCEA</color>
-    <color name="accent">#FFAD5642</color>
+    <color name="primary_deselected">#FF64748B</color>
+    <color name="primary_veryfaint">#FFE7EEF2</color>
+    <color name="accent">#FF14B8A6</color>
     <color name="accent_veryfaint">#55AD5642</color>
     <color name="over_s9">#FFCCBD4C</color>
     <color name="overload">#FFAD5642</color>

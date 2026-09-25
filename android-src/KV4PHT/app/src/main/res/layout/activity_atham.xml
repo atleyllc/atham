@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/athamRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/atham_black"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/athamCallsign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="accent"
+                android:text="N0CALL"
+                android:textColor="@color/atham_gold"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/athamDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="muted"
+                android:text="KV4P HT"
+                android:textColor="@color/atham_muted"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/athamFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="ink"
+            android:text="146.5200"
+            android:textColor="@color/atham_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/athamUnkey"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/atham_card"
+            android:minWidth="64dp"
+            android:tag="card-muted"
+            android:text="Unkey"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_muted"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:id="@+id/sectionHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="ink"
+                    android:text="ATHAM"
+                    android:textColor="@color/atham_text"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="muted"
+                    android:text="Mobile radio operations"
+                    android:textColor="@color/atham_muted"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/atham_card"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:tag="card">
+
+                    <TextView
+                        android:id="@+id/homeConnection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Not connected"
+                        android:textColor="@color/atham_muted"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/homeFrequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:tag="ink"
+                        android:text="146.5200"
+                        android:textColor="@color/atham_text"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/homeMeta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:tag="muted"
+                        android:text="FM  ·  Simplex  ·  Squelch 2  ·  Tone off"
+                        android:textColor="@color/atham_muted"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/launchRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/atham_card_mint"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:tag="wash"
+                    android:text="Talk\nOpen the radio on this frequency"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_gold"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:letterSpacing="0.08"
+                    android:tag="muted"
+                    android:text="OPEN"
+                    android:textColor="@color/atham_muted"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/launchScan"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:tag="card-ink"
+                    android:text="Scan\nSaved memory bank"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/launchLog"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:tag="card-ink"
+                    android:text="Log a contact\nVoiceLog on this frequency"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/launchClassic"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:tag="card-ink"
+                    android:text="KV4P Classic\nVoice and APRS screens"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionRadio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/radioState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.08"
+                    android:text="NOT CONNECTED"
+                    android:textColor="@color/atham_muted"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:tag="card">
+
+                    <TextView
+                        android:id="@+id/radioFrequency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="ink"
+                        android:text="146.5200"
+                        android:textColor="@color/atham_text"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/radioMeta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:tag="muted"
+                        android:text="FM  ·  Simplex  ·  Tone off  ·  Squelch 2"
+                        android:textColor="@color/atham_muted"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/radioFrequencyInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/atham_card"
+                    android:hint="Frequency"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:tag="field"
+                    android:text="146.5200"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/radioTune"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/atham_card"
+                        android:tag="card-ink"
+                        android:text="Tune"
+                        android:textAllCaps="false"
+                        android:textColor="@color/atham_text" />
+
+                    <Button
+                        android:id="@+id/radioConnect"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/atham_card_mint"
+                        android:tag="wash"
+                        android:text="Connect"
+                        android:textAllCaps="false"
+                        android:textColor="@color/atham_gold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/radioSignal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:tag="muted"
+                    android:text="Plug in a KV4P HT to tune, scan, and talk."
+                    android:textColor="@color/atham_muted"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/radioScan"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/atham_card"
+                    android:tag="card-ink"
+                    android:text="Scan memories"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text" />
+
+                <Button
+                    android:id="@+id/radioPtt"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/atham_card_mint"
+                    android:tag="wash"
+                    android:text="Hold to talk"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_gold"
+                    android:textSize="17sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionLog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="ink"
+                    android:text="Log"
+                    android:textColor="@color/atham_text"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/logBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/atham_card"
+                    android:lineSpacingExtra="4dp"
+                    android:padding="16dp"
+                    android:tag="card"
+                    android:text="No contacts yet."
+                    android:textColor="@color/atham_muted"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionModules"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="ink"
+                    android:text="Modules"
+                    android:textColor="@color/atham_text"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/modulesHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="muted"
+                    android:text="146.5200 MHz stays with you"
+                    android:textColor="@color/atham_muted"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/moduleVoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/atham_card"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:tag="card-ink"
+                    android:text="VoiceLog\nDraft a contact from this frequency"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/modulePacket"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:tag="card-ink"
+                    android:text="Packet\nAPRS on KV4P"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/moduleAppearance"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:tag="card-ink"
+                    android:text="Appearance\nTheme, accent, and text size"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/moduleDevices"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:tag="card-ink"
+                    android:text="Devices\nSettings and firmware"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:letterSpacing="0.08"
+                    android:tag="muted"
+                    android:text="LATER"
+                    android:textColor="@color/atham_muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:padding="16dp"
+                    android:tag="card-muted"
+                    android:text="Digital, Mail, Mesh, Spectrum, Maps, and Tools are not in this build."
+                    android:textColor="@color/atham_muted"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionVoice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="ink"
+                    android:text="VoiceLog"
+                    android:textColor="@color/atham_text"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/voiceContext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="muted"
+                    android:text="2 m  ·  FM  ·  Simplex"
+                    android:textColor="@color/atham_muted"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/voiceHeard"
+                    android:layout_width="match_parent"
+                    android:layout_height="88dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/atham_card"
+                    android:gravity="top"
+                    android:hint="What you heard"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:padding="16dp"
+                    android:tag="field"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/voiceCallsign"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:hint="Callsign"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:tag="field"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted" />
+
+                <EditText
+                    android:id="@+id/voiceReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:hint="Report"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:tag="field"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted" />
+
+                <EditText
+                    android:id="@+id/voiceName"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/atham_card"
+                    android:hint="Name"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapWords"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:tag="field"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted" />
+
+                <Button
+                    android:id="@+id/voiceFinalize"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/atham_card_mint"
+                    android:tag="wash"
+                    android:text="Finalize"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_gold"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionAppearance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="ink"
+                    android:text="Appearance"
+                    android:textColor="@color/atham_text"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:tag="muted"
+                    android:text="Same adjustments as Anchor"
+                    android:textColor="@color/atham_muted"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/appearanceThemeCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/atham_card"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:tag="card">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.08"
+                        android:tag="muted"
+                        android:text="THEME"
+                        android:textColor="@color/atham_muted"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:tag="muted"
+                        android:text="Dark keeps the original look. Light is a calm paper style. System follows this device. Text size follows your system accessibility settings."
+                        android:textColor="@color/atham_muted"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/themeDark"
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/atham_card"
+                            android:text="Dark"
+                            android:textAllCaps="false"
+                            android:textColor="@color/atham_text" />
+
+                        <Button
+                            android:id="@+id/themeLight"
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/atham_card_mint"
+                            android:text="Light"
+                            android:textAllCaps="false"
+                            android:textColor="@color/atham_gold" />
+
+                        <Button
+                            android:id="@+id/themeSystem"
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/atham_card"
+                            android:text="System"
+                            android:textAllCaps="false"
+                            android:textColor="@color/atham_text" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/appearanceAccentCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/atham_card"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:tag="card">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.08"
+                        android:tag="muted"
+                        android:text="ACCENT"
+                        android:textColor="@color/atham_muted"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/accentCaption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:tag="muted"
+                        android:text="Anchor is a sea-glass emerald accent. Other colors stay optional."
+                        android:textColor="@color/atham_muted"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/accentAnchor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp">
+
+                            <View
+                                android:id="@+id/accentAnchorDot"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:background="@color/atham_gold" />
+
+                            <TextView
+                                android:id="@+id/accentAnchorLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Anchor"
+                                android:textColor="@color/atham_gold"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/accentClay"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp">
+
+                            <View
+                                android:id="@+id/accentClayDot"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:background="#B86B64" />
+
+                            <TextView
+                                android:id="@+id/accentClayLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Clay"
+                                android:textColor="@color/atham_muted"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/accentOrange"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp">
+
+                            <View
+                                android:id="@+id/accentOrangeDot"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:background="#F97316" />
+
+                            <TextView
+                                android:id="@+id/accentOrangeLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Orange"
+                                android:textColor="@color/atham_muted"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/accentPurple"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp">
+
+                            <View
+                                android:id="@+id/accentPurpleDot"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:background="#8B6FD4" />
+
+                            <TextView
+                                android:id="@+id/accentPurpleLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Purple"
+                                android:textColor="@color/atham_muted"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/accentBlue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp">
+
+                            <View
+                                android:id="@+id/accentBlueDot"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:background="#3B82F6" />
+
+                            <TextView
+                                android:id="@+id/accentBlueLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Blue"
+                                android:textColor="@color/atham_muted"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <View
+        android:id="@+id/athamNavLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/atham_line" />
+
+    <LinearLayout
+        android:id="@+id/athamNav"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="Home"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_gold"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/navRadio"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="Radio"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_muted"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/navLog"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="Log"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_muted"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/navModules"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="Modules"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_muted"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

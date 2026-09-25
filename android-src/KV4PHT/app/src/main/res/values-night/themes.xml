@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your dark theme here. -->
         <item name="android:fontFamily">@font/jost</item>
         <item name="fontFamily">@font/jost

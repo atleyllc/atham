@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="atham_black">#FFF3F5F8</color>
+    <color name="atham_graphite">#FFFFFFFF</color>
+    <color name="atham_graphite_2">#FFE7F8F4</color>
+    <color name="atham_line">#FFE6EAF0</color>
+    <color name="atham_gold">#FF0F9B8A</color>
+    <color name="atham_text">#FF1C2430</color>
+    <color name="atham_muted">#FF64748B</color>
+    <color name="atham_rx">#FF0F9B8A</color>
+    <color name="atham_tx">#FF0F766E</color>
+    <color name="atham_err">#FF9F5A56</color>
+</resources>

@@ -36,13 +36,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.KV4PHT"
+        android:theme="@style/Theme.ATHAM"
         tools:targetApi="31">
 
         <activity
             android:name=".ui.FindRepeatersActivity"
             android:exported="true"
-            android:theme="@style/Theme.KV4PHT"
+            android:theme="@style/Theme.ATHAM"
             android:windowSoftInputMode="stateVisible">
             <intent-filter>
                 <action android:name="com.vagell.kv4pht.FIND_REPEATERS" />
@@ -53,7 +53,7 @@
         <activity
             android:name=".ui.FirmwareActivity"
             android:exported="true"
-            android:theme="@style/Theme.KV4PHT"
+            android:theme="@style/Theme.ATHAM"
             android:windowSoftInputMode="stateVisible">
             <intent-filter>
                 <action android:name="com.vagell.kv4pht.FIRMWARE_ACTION" />
@@ -64,7 +64,7 @@
         <activity
             android:name=".ui.SettingsActivity"
             android:exported="true"
-            android:theme="@style/Theme.KV4PHT"
+            android:theme="@style/Theme.ATHAM"
             android:windowSoftInputMode="stateVisible">
             <intent-filter>
                 <action android:name="com.vagell.kv4pht.SETTINGS_ACTION" />
@@ -75,7 +75,7 @@
         <activity
             android:name=".ui.AddEditMemoryActivity"
             android:exported="true"
-            android:theme="@style/Theme.KV4PHT"
+            android:theme="@style/Theme.ATHAM"
             android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="com.vagell.kv4pht.ADD_MEMORY_ACTION" />
@@ -85,15 +85,22 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.AthamActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:theme="@style/Theme.ATHAM">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:configChanges="orientation|screenSize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.vagell.kv4pht.OPEN_CHAT_ACTION" />

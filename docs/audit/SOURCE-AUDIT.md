@@ -30,6 +30,8 @@ Checked out source, not an earlier written claim.
 
 `RadioModuleController` is the Android-side desired-state writer for this radio. It is not a multi-module session owner.
 
+Which of these files belong to each future module is listed in [MODULE-MAP.md](MODULE-MAP.md).
+
 ## Room
 
 Database name: `kv4pht-db`. Version 7.
