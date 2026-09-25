@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radioMailRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/radio_mail"
+        android:textColor="@color/atley_foreground"
+        android:textSize="28sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/radio_mail_help"
+        android:textColor="@color/atley_muted"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mailInbox"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/pill_idle"
+            android:gravity="center"
+            android:onClick="mailInboxClicked"
+            android:text="@string/mail_inbox"
+            android:textColor="@color/atley_foreground" />
+
+        <TextView
+            android:id="@+id/mailOutbox"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/pill_outline"
+            android:gravity="center"
+            android:onClick="mailOutboxClicked"
+            android:text="@string/mail_outbox"
+            android:textColor="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/mailSent"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/pill_idle"
+            android:gravity="center"
+            android:onClick="mailSentClicked"
+            android:text="@string/mail_sent"
+            android:textColor="@color/atley_foreground" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mailList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_surface"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <EditText
+            android:id="@+id/mailTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="@string/mail_to_hint"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:textColor="@color/atley_foreground"
+            android:textColorHint="@color/atley_muted" />
+
+        <EditText
+            android:id="@+id/mailSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="@string/mail_subject_hint"
+            android:maxLines="1"
+            android:textColor="@color/atley_foreground"
+            android:textColorHint="@color/atley_muted" />
+
+        <EditText
+            android:id="@+id/mailBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="@string/mail_body_hint"
+            android:minLines="3"
+            android:textColor="@color/atley_foreground"
+            android:textColorHint="@color/atley_muted" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="?attr/colorPrimary"
+            android:onClick="mailSendClicked"
+            android:text="@string/mail_send"
+            android:textAllCaps="false"
+            android:textColor="@color/on_accent" />
+    </LinearLayout>
+</LinearLayout>

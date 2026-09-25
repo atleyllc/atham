@@ -36,9 +36,9 @@ Work is staged. Radio-critical USB, audio, PTT, firmware, and protocol code is n
 
 ## Current test build
 
-The current install is **atleyht-0.1.6-debug.apk** on the GitHub release `atleyht-0.1.6`.
+The current install is **atleyht-0.1.7-debug.apk** on the GitHub release `atleyht-0.1.7`.
 
-Download: https://github.com/atleyllc/atleyht/releases/download/atleyht-0.1.6/atleyht-0.1.6-debug.apk
+Download: https://github.com/atleyllc/atleyht/releases/download/atleyht-0.1.7/atleyht-0.1.7-debug.apk
 
 It is the official kv4p HT app (`com.vagell.kv4pht`) with public-firmware Opus receive audio and the card interface:
 

@@ -946,6 +946,11 @@ public class MainActivity extends AppCompatActivity {
         closeSideNav();
     }
 
+    public void navRadioMailClicked(View view) {
+        closeSideNav();
+        startActivity(new Intent(this, RadioMailActivity.class));
+    }
+
     public void aprsMessagesClicked(View view) {
         showAprsPane(false);
     }
