@@ -10,6 +10,8 @@ public class RadioMailMessage {
     public static final int OUTBOX = 1;
     public static final int SENT = 2;
     public static final int INBOX = 3;
+    public static final int TRASH = 4;
+    public static final int ARCHIVE = 5;
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -31,4 +33,10 @@ public class RadioMailMessage {
 
     @ColumnInfo(name = "status")
     public String status;
+
+    @ColumnInfo(name = "unread", defaultValue = "1")
+    public boolean unread;
+
+    @ColumnInfo(name = "flagged", defaultValue = "0")
+    public boolean flagged;
 }
