@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radioMailRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:id="@+id/mailHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mailboxes"
+                android:textColor="@color/atley_foreground"
+                android:textSize="28sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/card_surface"
+                android:orientation="vertical">
+
+                <TextView android:id="@+id/rowInbox" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openInbox" android:paddingLeft="16dp" android:paddingRight="16dp" android:text="@string/mail_inbox" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+                <TextView android:id="@+id/rowDrafts" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openDrafts" android:paddingLeft="16dp" android:paddingRight="16dp" android:text="@string/mail_drafts" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+                <TextView android:id="@+id/rowOutbox" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openOutbox" android:paddingLeft="16dp" android:paddingRight="16dp" android:text="@string/mail_outbox" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+                <TextView android:id="@+id/rowSent" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openSent" android:paddingLeft="16dp" android:paddingRight="16dp" android:text="@string/mail_sent" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+                <TextView android:id="@+id/rowTrash" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openTrash" android:paddingLeft="16dp" android:paddingRight="16dp" android:text="@string/mail_trash" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+                <TextView android:id="@+id/rowArchive" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openArchive" android:paddingLeft="16dp" android:paddingRight="16dp" android:text="@string/mail_archive" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+                <TextView android:id="@+id/rowFlagged" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openFlagged" android:paddingLeft="16dp" android:paddingRight="16dp" android:text="@string/mail_flagged" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:letterSpacing="0.12"
+                android:text="@string/mail_stations"
+                android:textAllCaps="true"
+                android:textColor="@color/atley_muted"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/card_surface"
+                android:orientation="vertical">
+
+                <TextView android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openDirectory" android:paddingLeft="16dp" android:text="@string/mail_directory" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:onClick="openFavorites" android:paddingLeft="16dp" android:text="@string/mail_favorites" android:textColor="@color/atley_foreground" android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:letterSpacing="0.12"
+                android:text="@string/mail_devices"
+                android:textAllCaps="true"
+                android:textColor="@color/atley_muted"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="72dp"
+                android:background="@drawable/card_surface"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mail_device_name"
+                    android:textColor="@color/atley_foreground"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mail_device_modes"
+                    android:textColor="@color/atley_muted"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/mailListPane"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <TextView android:id="@+id/mailBack" android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="showHome" android:text="@string/mail_back" android:textColor="?attr/colorPrimary" android:textSize="16sp" />
+        <TextView android:id="@+id/mailListTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textColor="@color/atley_foreground" android:textSize="28sp" />
+        <EditText android:id="@+id/mailSearch" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/mail_search" android:inputType="text" android:textColor="@color/atley_foreground" />
+        <TextView android:id="@+id/mailEmpty" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="24dp" android:text="@string/mail_empty" android:textColor="@color/atley_muted" android:visibility="gone" />
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/mailList" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="8dp" android:layout_weight="1" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/mailReader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="backToList" android:text="@string/mail_back" android:textColor="?attr/colorPrimary" />
+            <TextView android:id="@+id/readerSubject" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textColor="@color/atley_foreground" android:textSize="24sp" />
+            <TextView android:id="@+id/readerAddress" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:textSize="16sp" />
+            <TextView android:id="@+id/readerStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/atley_muted" android:textSize="14sp" />
+            <TextView android:id="@+id/readerBody" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:textColor="@color/atley_foreground" android:textIsSelectable="true" android:textSize="18sp" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:orientation="horizontal">
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="replyClicked" android:text="@string/mail_reply" android:textAllCaps="false" />
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="forwardClicked" android:text="@string/mail_forward" android:textAllCaps="false" />
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="flagClicked" android:text="@string/mail_flag" android:textAllCaps="false" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="archiveClicked" android:text="@string/mail_archive" android:textAllCaps="false" />
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="unreadClicked" android:text="@string/mail_unread" android:textAllCaps="false" />
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="resendClicked" android:text="@string/mail_resend" android:textAllCaps="false" />
+                <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="trashClicked" android:text="@string/mail_trash" android:textAllCaps="false" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/mailComposer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="showHome" android:text="@string/mail_back" android:textColor="?attr/colorPrimary" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/mail_new" android:textColor="@color/atley_foreground" android:textSize="28sp" />
+        <EditText android:id="@+id/mailTo" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/mail_to_hint" android:inputType="textEmailAddress" android:textColor="@color/atley_foreground" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="templateCheckIn" android:text="@string/mail_check_in" android:textAllCaps="false" />
+            <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="templateWelfare" android:text="@string/mail_welfare" android:textAllCaps="false" />
+            <Button android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:onClick="templateWeather" android:text="@string/mail_weather" android:textAllCaps="false" />
+        </LinearLayout>
+        <EditText android:id="@+id/mailSubject" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/mail_subject_hint" android:textColor="@color/atley_foreground" />
+        <EditText android:id="@+id/mailBody" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:gravity="top" android:hint="@string/mail_body_hint" android:minLines="6" android:textColor="@color/atley_foreground" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="end" android:orientation="horizontal">
+            <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="saveDraftClicked" android:text="@string/mail_save_draft" android:textAllCaps="false" />
+            <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:backgroundTint="?attr/colorPrimary" android:onClick="mailSendClicked" android:text="@string/mail_send" android:textAllCaps="false" android:textColor="@color/on_accent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mailDirectory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="showHome" android:text="@string/mail_back" android:textColor="?attr/colorPrimary" />
+        <TextView android:id="@+id/directoryTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/mail_directory" android:textColor="@color/atley_foreground" android:textSize="28sp" />
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/stationList" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+        <EditText android:id="@+id/stationCall" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/mail_station_call" android:textColor="@color/atley_foreground" />
+        <EditText android:id="@+id/stationNote" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/mail_station_note" android:textColor="@color/atley_foreground" />
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="end" android:backgroundTint="?attr/colorPrimary" android:onClick="addStationClicked" android:text="@string/mail_add_station" android:textAllCaps="false" android:textColor="@color/on_accent" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/mailComposeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:onClick="composeClicked"
+        android:text="@string/mail_new"
+        android:textAllCaps="false"
+        android:textColor="@color/on_accent" />
+</FrameLayout>

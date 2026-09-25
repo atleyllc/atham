@@ -104,7 +104,8 @@ public class APRSAdapter extends RecyclerView.Adapter<APRSAdapter.APRSViewHolder
             case APRSMessage.MESSAGE_TYPE:
                 holder.setToCallsign(aprsMessage.toCallsign);
                 holder.setMsgBody(aprsMessage.msgBody);
-                holder.setWasAcknowledged(aprsMessage.wasAcknowledged);
+                holder.setWasAcknowledged(aprsMessage.wasAcknowledged || aprsMessage.delivery == com.vagell.kv4pht.aprs.AprsOperator.DELIVERY_ACKED);
+                holder.setDelivery(aprsMessage.delivery);
                 break;
             case APRSMessage.OBJECT_TYPE:
                 holder.setObjName(aprsMessage.objName);
@@ -144,6 +145,7 @@ public class APRSAdapter extends RecyclerView.Adapter<APRSAdapter.APRSViewHolder
         TextView textViewToCallsign;
         TextView textViewMsgBody;
         View ackIcon;
+        TextView deliveryStatus;
         TextView textViewObjName;
         TextView textViewRelayCallsign;
         TextView textViewRelayViaLabel;
@@ -167,6 +169,7 @@ public class APRSAdapter extends RecyclerView.Adapter<APRSAdapter.APRSViewHolder
             textViewToCallsign = itemView.findViewById(R.id.toCallsign);
             textViewMsgBody = itemView.findViewById(R.id.messageBody);
             ackIcon = itemView.findViewById(R.id.msgAck);
+            deliveryStatus = itemView.findViewById(R.id.deliveryStatus);
             textViewObjName = itemView.findViewById(R.id.objName);
             textViewRelayCallsign = itemView.findViewById(R.id.relayCallsign);
             textViewRelayViaLabel = itemView.findViewById(R.id.relayViaLabel);
@@ -282,6 +285,21 @@ public class APRSAdapter extends RecyclerView.Adapter<APRSAdapter.APRSViewHolder
                 return;
             }
             ackIcon.setVisibility(ack ? View.VISIBLE : View.GONE);
+        }
+
+        public void setDelivery(int delivery) {
+            if (deliveryStatus == null) {
+                return;
+            }
+            if (delivery == com.vagell.kv4pht.aprs.AprsOperator.DELIVERY_PENDING) {
+                deliveryStatus.setText(itemView.getContext().getString(R.string.aprs_delivery_pending));
+                deliveryStatus.setVisibility(View.VISIBLE);
+            } else if (delivery == com.vagell.kv4pht.aprs.AprsOperator.DELIVERY_REJECTED) {
+                deliveryStatus.setText(itemView.getContext().getString(R.string.aprs_delivery_rejected));
+                deliveryStatus.setVisibility(View.VISIBLE);
+            } else {
+                deliveryStatus.setVisibility(View.GONE);
+            }
         }
 
         public void setObjName(String objName) {

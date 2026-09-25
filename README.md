@@ -36,16 +36,18 @@ Work is staged. Radio-critical USB, audio, PTT, firmware, and protocol code is n
 
 ## Current test build
 
-The current install is **atleyht-0.1.4-debug.apk** on the GitHub release `atleyht-0.1.4`.
+The current install is **atleyht-0.1.9-debug.apk** on the GitHub release `atleyht-0.1.9`.
 
-Download: https://github.com/atleyllc/atleyht/releases/download/atleyht-0.1.4/atleyht-0.1.4-debug.apk
+Download: https://github.com/atleyllc/atleyht/releases/download/atleyht-0.1.9/atleyht-0.1.9-debug.apk
 
 It is the official kv4p HT app (`com.vagell.kv4pht`) with public-firmware Opus receive audio and the card interface:
 
 - Light canvas by default, with Dark and System in Settings → Appearance
 - Orange accent by default, with teal, rose, and blue swatches
 - VFO, MR, and SCAN pills under the frequency
-- Side panel for Voice, APRS chat, radio settings, appearance, repeaters, and firmware
+- Side panel for Voice, APRS chat, heard stations, radio settings, appearance, repeaters, and firmware
+- APRS messages show Sending until the other station acks or rejects them. Stations lists the newest position for each callsign with a Maidenhead grid. Beacons stay manual.
+- Radio mail is in the side panel. Inbox, drafts, outbox, sent, trash, archive, and flagged are local mailboxes. Search, reply, forward, flag, and check-in templates are in the client. Numbered packet lines addressed to you reassemble into the inbox. Extra callsigns separated by commas each get a copy, paced on the current frequency after you confirm. Email addresses stay in the outbox until a Winlink gateway session exists. ARDOP and VARA are not on this radio.
 - PTT sits in its own row, clear of the navigation
 - Rounded cards, pill controls, and a rounded PTT
 
