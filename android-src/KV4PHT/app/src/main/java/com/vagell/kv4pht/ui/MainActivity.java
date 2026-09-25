@@ -76,6 +76,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.vagell.kv4pht.BR;
 import com.vagell.kv4pht.R;
+import com.vagell.kv4pht.aprs.AprsOperator;
 import com.vagell.kv4pht.aprs.parser.APRSPacket;
 import com.vagell.kv4pht.aprs.parser.APRSTypes;
 import com.vagell.kv4pht.aprs.parser.InformationField;
@@ -150,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
     private MemoriesAdapter memoriesAdapter;
     private RecyclerView aprsRecyclerView;
     private APRSAdapter aprsAdapter;
+    private AprsStationAdapter stationAdapter;
+    private boolean showingStations = false;
 
     private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 10, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
@@ -253,6 +256,14 @@ public class MainActivity extends AppCompatActivity {
         aprsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         aprsAdapter = new APRSAdapter();
         aprsRecyclerView.setAdapter(aprsAdapter);
+        RecyclerView stationsRecyclerView = findViewById(R.id.stationsList);
+        stationsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        stationAdapter = new AprsStationAdapter(station -> {
+            EditText to = findViewById(R.id.textChatTo);
+            to.setText(station.fromCallsign);
+            showAprsPane(false);
+        });
+        stationsRecyclerView.setAdapter(stationAdapter);
 
         // Observe the APRS messages LiveData in MainViewModel (so the RecyclerView can populate with the APRS messages)
         viewModel.getAPRSMessages().observe(this, new Observer<List<APRSMessage>>() {
@@ -260,6 +271,9 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<APRSMessage> aprsMessages) {
                 aprsAdapter.setAPRSMessageList(aprsMessages);
                 aprsAdapter.notifyDataSetChanged();
+                if (stationAdapter != null) {
+                    stationAdapter.setStations(AprsOperator.latestStations(aprsMessages));
+                }
 
                 // Scroll to the bottom when a new message is added
                 if (aprsMessages != null && !aprsMessages.isEmpty()) {
@@ -745,8 +759,9 @@ public class MainActivity extends AppCompatActivity {
                 aprsMessage.msgNum = -1;
             }
 
-            if (messagePacket.isAck()) {
-                aprsMessage.wasAcknowledged = true;
+            if (messagePacket.isAck() || messagePacket.isRej()) {
+                aprsMessage.wasAcknowledged = messagePacket.isAck() && !messagePacket.isRej();
+                aprsMessage.delivery = AprsOperator.deliveryAfterReport(messagePacket.isAck(), messagePacket.isRej());
                 if (aprsMessage.msgNum == -1) {
                     Log.d("DEBUG", "Warning: Bad message number in APRS ack, ignoring: '" + messagePacket.getMessageNumber() + "'");
                     return;
@@ -808,7 +823,8 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     } else {
                         // Ack an old message
-                        oldAPRSMessage.wasAcknowledged = true;
+                        oldAPRSMessage.wasAcknowledged = aprsMessage.wasAcknowledged;
+                        oldAPRSMessage.delivery = aprsMessage.delivery;
                         viewModel.getAppDb().aprsMessageDao().update(oldAPRSMessage);
                     }
                 } else {
@@ -920,7 +936,39 @@ public class MainActivity extends AppCompatActivity {
 
     public void navChatClicked(View view) {
         showScreen(ScreenType.SCREEN_CHAT);
+        showAprsPane(false);
         closeSideNav();
+    }
+
+    public void navStationsClicked(View view) {
+        showScreen(ScreenType.SCREEN_CHAT);
+        showAprsPane(true);
+        closeSideNav();
+    }
+
+    public void aprsMessagesClicked(View view) {
+        showAprsPane(false);
+    }
+
+    public void aprsStationsClicked(View view) {
+        showAprsPane(true);
+    }
+
+    private void showAprsPane(boolean stations) {
+        showingStations = stations;
+        View messages = findViewById(R.id.aprsRecyclerView);
+        View stationList = findViewById(R.id.stationsList);
+        TextView messagesPill = findViewById(R.id.aprsMessagesPill);
+        TextView stationsPill = findViewById(R.id.aprsStationsPill);
+        if (messages == null || stationList == null) {
+            return;
+        }
+        messages.setVisibility(stations ? GONE : VISIBLE);
+        stationList.setVisibility(stations ? VISIBLE : GONE);
+        messagesPill.setBackgroundResource(stations ? R.drawable.pill_idle : R.drawable.pill_selected);
+        stationsPill.setBackgroundResource(stations ? R.drawable.pill_selected : R.drawable.pill_idle);
+        messagesPill.setTextColor(getResources().getColor(stations ? R.color.atley_foreground : R.color.on_accent));
+        stationsPill.setTextColor(getResources().getColor(stations ? R.color.on_accent : R.color.atley_foreground));
     }
 
     public void navSettingsClicked(View view) {
@@ -1025,6 +1073,7 @@ public class MainActivity extends AppCompatActivity {
         aprsMessage.msgBody = outText.trim();
         aprsMessage.timestamp = java.time.Instant.now().getEpochSecond();
         aprsMessage.msgNum = msgNum;
+        aprsMessage.delivery = msgNum >= 0 ? AprsOperator.DELIVERY_PENDING : AprsOperator.DELIVERY_NONE;
 
         threadPoolExecutor.execute(new Runnable() {
             @Override

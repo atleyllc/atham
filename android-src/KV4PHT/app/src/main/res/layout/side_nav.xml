@@ -62,6 +62,20 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/navStations"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/pill_idle"
+            android:gravity="center_vertical"
+            android:onClick="navStationsClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/aprs_stations"
+            android:textColor="@color/atley_foreground"
+            android:textSize="16sp" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"

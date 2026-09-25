@@ -86,6 +86,14 @@
             android:contentDescription="Show sender's position"
             android:visibility="gone"/>
 
+        <TextView
+            android:id="@+id/deliveryStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/msgAck"
             android:layout_width="24dp"

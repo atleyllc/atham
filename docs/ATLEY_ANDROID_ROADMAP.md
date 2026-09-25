@@ -108,6 +108,8 @@ Classic Bluetooth SPP on the ESP32 is **not** an Android headset path. Treat it 
 
 Do not move AFSK back to Android `javAX25` unless firmware AFSK is proven insufficient. Firmware TNC is the supported path.
 
+**Started, phone only:** heard-station list with Maidenhead, and outgoing message status (sending / acknowledged / rejected). Beacons stay operator-started. Do not ship FreeDV, SSTV, or firmware CSMA until voice firmware is one codec and a flash is intentional.
+
 ---
 
 ## Stage F — Atley ecosystem

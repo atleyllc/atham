@@ -69,6 +69,9 @@ public class APRSMessage {
     @ColumnInfo(name = "ack")
     public boolean wasAcknowledged;
 
+    @ColumnInfo(name = "delivery", defaultValue = "0")
+    public int delivery;
+
     @ColumnInfo(name = "message_num")
     public int msgNum;
 

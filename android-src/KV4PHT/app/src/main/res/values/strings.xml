@@ -90,6 +90,10 @@
     <string name="appearance">Appearance</string>
     <string name="side_nav_title">Radio</string>
     <string name="radio_settings">Radio settings</string>
+    <string name="aprs_messages">Messages</string>
+    <string name="aprs_stations">Stations</string>
+    <string name="aprs_delivery_pending">Sending</string>
+    <string name="aprs_delivery_rejected">Rejected</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_system">System</string>
