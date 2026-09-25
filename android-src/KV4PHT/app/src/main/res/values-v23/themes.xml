@@ -2,7 +2,7 @@
     <style name="Theme.KV4PHT" parent="Base.Theme.KV4PHT">
         <item name="android:navigationBarColor">@color/atley_background</item>
         <item name="android:statusBarColor">@color/atley_background</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimary">@color/atley_bronze</item>
         <item name="colorOnPrimary">@color/atley_on_bronze</item>
         <item name="colorSecondary">@color/atley_titanium</item>

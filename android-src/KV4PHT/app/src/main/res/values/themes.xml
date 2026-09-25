@@ -1,5 +1,5 @@
 <resources>
-    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:fontFamily">@font/jost</item>
         <item name="fontFamily">@font/jost</item>
         <item name="android:windowTranslucentStatus">true</item>
