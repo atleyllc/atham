@@ -273,7 +273,8 @@
                     android:textSize="18dp"
                     android:textColor="@color/primary"
                     android:layout_marginTop="8dp"
-                    android:trackTintMode="add"
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track"
                     android:checked="false"/>
 
                 <Switch
@@ -284,7 +285,8 @@
                     android:textSize="18dp"
                     android:textColor="@color/primary"
                     android:layout_marginTop="8dp"
-                    android:trackTintMode="add"
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track"
                     android:checked="false"/>
 
                 <Switch
@@ -295,7 +297,8 @@
                     android:textSize="18dp"
                     android:textColor="@color/primary"
                     android:layout_marginTop="8dp"
-                    android:trackTintMode="add"
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track"
                     android:checked="false"/>
 
                 <TextView
@@ -315,7 +318,8 @@
                     android:textSize="18dp"
                     android:textColor="@color/primary"
                     android:layout_marginTop="8dp"
-                    android:trackTintMode="add"/>
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track"/>
 
                 <Switch
                     android:id="@+id/noAnimationsSwitch"
@@ -325,7 +329,8 @@
                     android:textSize="18dp"
                     android:textColor="@color/primary"
                     android:layout_marginTop="8dp"
-                    android:trackTintMode="add"/>
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -380,7 +385,8 @@
                     android:textSize="18dp"
                     android:textColor="@color/primary"
                     android:layout_marginTop="8dp"
-                    android:trackTintMode="add"/>
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -512,7 +518,8 @@
                     android:textSize="18dp"
                     android:textColor="@color/primary"
                     android:layout_marginTop="8dp"
-                    android:trackTintMode="add"/>
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track"/>
 
                 <TextView
                     android:layout_width="wrap_content"

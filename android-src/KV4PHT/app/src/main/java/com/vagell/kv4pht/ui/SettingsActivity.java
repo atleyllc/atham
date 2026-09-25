@@ -186,12 +186,24 @@ public class SettingsActivity extends AppCompatActivity {
         styleChoice(R.id.themeLight, Appearance.THEME_LIGHT.equals(theme));
         styleChoice(R.id.themeDark, Appearance.THEME_DARK.equals(theme));
         styleChoice(R.id.themeSystem, Appearance.THEME_SYSTEM.equals(theme));
+        String accent = Appearance.accent(this);
+        markSwatch(R.id.accentTeal, Appearance.ACCENT_TEAL.equals(accent));
+        markSwatch(R.id.accentRose, Appearance.ACCENT_ROSE.equals(accent));
+        markSwatch(R.id.accentOrange, Appearance.ACCENT_ORANGE.equals(accent));
+        markSwatch(R.id.accentBlue, Appearance.ACCENT_BLUE.equals(accent));
     }
 
     private void styleChoice(int viewId, boolean selected) {
         TextView choice = findViewById(viewId);
-        choice.setBackgroundResource(selected ? R.drawable.pill_selected : R.drawable.pill_idle);
-        choice.setTextColor(getResources().getColor(selected ? R.color.on_accent : R.color.atley_foreground));
+        choice.setBackgroundResource(selected ? R.drawable.pill_outline : R.drawable.pill_idle);
+        android.util.TypedValue typed = new android.util.TypedValue();
+        getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typed, true);
+        choice.setTextColor(selected ? typed.data : getResources().getColor(R.color.atley_foreground));
+    }
+
+    private void markSwatch(int viewId, boolean selected) {
+        View swatch = findViewById(viewId);
+        swatch.setForeground(selected ? getDrawable(R.drawable.swatch_ring) : null);
     }
 
     @Override
