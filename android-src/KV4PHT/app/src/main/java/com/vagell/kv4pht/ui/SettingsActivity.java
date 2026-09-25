@@ -85,6 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String EXTRA_FILTER_HIGH = "filterHigh";
     public static final String EXTRA_FILTER_LOW = "filterLow";
     public static final String EXTRA_APRS_ICON = "aprsIcon";
+    public static final String EXTRA_OPEN_APPEARANCE = "openAppearance";
 
     private RadioAudioService radioAudioService = null;
     private boolean radioAudioServiceBound = false;
@@ -139,6 +140,10 @@ public class SettingsActivity extends AppCompatActivity {
         populateRadioOptions();
         populateVersions();
         bindAppearance();
+        if (getIntent().getBooleanExtra(EXTRA_OPEN_APPEARANCE, false)) {
+            View appearance = findViewById(R.id.appearanceCard);
+            appearance.post(() -> appearance.requestRectangleOnScreen(new android.graphics.Rect(0, 0, appearance.getWidth(), appearance.getHeight()), false));
+        }
     }
 
     public void themeLightClicked(View view) {

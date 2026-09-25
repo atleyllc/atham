@@ -88,6 +88,8 @@
     <string name="mode_mr">MR</string>
     <string name="mode_scan">SCAN</string>
     <string name="appearance">Appearance</string>
+    <string name="side_nav_title">Radio</string>
+    <string name="radio_settings">Radio settings</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_system">System</string>

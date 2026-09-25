@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sideNav"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@color/atley_surface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="28dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.14"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textColor="@color/atley_muted"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/side_nav_title"
+            android:textColor="@color/atley_foreground"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/navVoice"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/pill_selected"
+            android:gravity="center_vertical"
+            android:onClick="navVoiceClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/voice_display"
+            android:textColor="@color/on_accent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/navChat"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/pill_idle"
+            android:gravity="center_vertical"
+            android:onClick="navChatClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/aprs_chat_display"
+            android:textColor="@color/atley_foreground"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="8dp"
+            android:letterSpacing="0.12"
+            android:text="@string/settings"
+            android:textAllCaps="true"
+            android:textColor="@color/atley_muted"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/navSettings"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/pill_idle"
+            android:gravity="center_vertical"
+            android:onClick="navSettingsClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/radio_settings"
+            android:textColor="@color/atley_foreground"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/navAppearance"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/pill_idle"
+            android:gravity="center_vertical"
+            android:onClick="navAppearanceClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/appearance"
+            android:textColor="@color/atley_foreground"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/navRepeaters"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/pill_idle"
+            android:gravity="center_vertical"
+            android:onClick="navRepeatersClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/find_repeaters_menu_item"
+            android:textColor="@color/atley_foreground"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/navFirmware"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/pill_idle"
+            android:gravity="center_vertical"
+            android:onClick="navFirmwareClicked"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/flash_firmware_menu_item"
+            android:textColor="@color/atley_foreground"
+            android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>

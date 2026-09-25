@@ -36,15 +36,17 @@ Work is staged. Radio-critical USB, audio, PTT, firmware, and protocol code is n
 
 ## Current test build
 
-The current install is **atleyht-0.1.3-debug.apk** on the GitHub release `atleyht-0.1.3`.
+The current install is **atleyht-0.1.4-debug.apk** on the GitHub release `atleyht-0.1.4`.
 
-Download: https://github.com/atleyllc/atleyht/releases/download/atleyht-0.1.3/atleyht-0.1.3-debug.apk
+Download: https://github.com/atleyllc/atleyht/releases/download/atleyht-0.1.4/atleyht-0.1.4-debug.apk
 
 It is the official kv4p HT app (`com.vagell.kv4pht`) with public-firmware Opus receive audio and the card interface:
 
 - Light canvas by default, with Dark and System in Settings → Appearance
 - Orange accent by default, with teal, rose, and blue swatches
 - VFO, MR, and SCAN pills under the frequency
+- Side panel for Voice, APRS chat, radio settings, appearance, repeaters, and firmware
+- PTT sits in its own row, clear of the navigation
 - Rounded cards, pill controls, and a rounded PTT
 
 Uninstall the previous debug build before installing this one. Both use the same application id and the project’s public CI debug key. This is a test APK, not a Play Store release. The older baseline APK stays on the same release for comparison.
