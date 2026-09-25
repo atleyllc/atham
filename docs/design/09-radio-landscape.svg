@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="844" height="390" viewBox="0 0 844 390">
+<style>text{font-family:'Avenir Next','Segoe UI',Helvetica,Arial,sans-serif}</style>
+<rect x="0" y="0" width="844" height="390" rx="0" fill="#0C0D0B"/>
+<rect x="0" y="0" width="844" height="48" rx="0" fill="#181A17"/>
+<text x="16" y="30" fill="#C4A46A" font-size="13" font-weight="650" text-anchor="start">N0CALL</text>
+<text x="100" y="30" fill="#9A968C" font-size="13" font-weight="500" text-anchor="start">KV4P HT</text>
+<text x="330" y="30" fill="#F3F0E8" font-size="15" font-weight="650" text-anchor="middle">146.5200  FM  SIMPLEX</text>
+<rect x="736" y="10" width="92" height="28" rx="6" fill="#2A2418" stroke="#C4A46A" stroke-width="1.5"/>
+<text x="782" y="29" fill="#C4A46A" font-size="12" font-weight="700" text-anchor="middle">UNKEY</text>
+<text x="28" y="120" fill="#F3F0E8" font-size="56" font-weight="650" text-anchor="start">146.5200</text>
+<text x="28" y="154" fill="#9A968C" font-size="15" font-weight="500" text-anchor="start">VFO A     Squelch 2     Tone off     Quiet</text>
+<rect x="28" y="180" width="140" height="72" rx="10" fill="#181A17"/>
+<text x="44" y="208" fill="#C4A46A" font-size="12" font-weight="650" text-anchor="start">VFO A</text>
+<text x="44" y="232" fill="#F3F0E8" font-size="16" font-weight="600" text-anchor="start">Active</text>
+<rect x="180" y="180" width="140" height="72" rx="10" fill="#181A17"/>
+<text x="196" y="208" fill="#9A968C" font-size="12" font-weight="650" text-anchor="start">VFO B</text>
+<text x="196" y="232" fill="#9A968C" font-size="16" font-weight="600" text-anchor="start">446.000</text>
+<rect x="28" y="270" width="400" height="56" rx="10" fill="#181A17"/>
+<text x="44" y="304" fill="#F3F0E8" font-size="14" font-weight="500" text-anchor="start">Offset none    Step 5 kHz    Power high</text>
+<rect x="500" y="72" width="316" height="250" rx="12" fill="#181A17"/>
+<text x="658" y="160" fill="#C4A46A" font-size="20" font-weight="700" text-anchor="middle">HOLD TO TALK</text>
+<text x="658" y="192" fill="#9A968C" font-size="13" font-weight="500" text-anchor="middle">Radio owns the path</text>
+<text x="658" y="240" fill="#F3F0E8" font-size="14" font-weight="600" text-anchor="middle">Squelch 2  ·  signal quiet</text>
+<rect x="0" y="342" width="844" height="48" rx="0" fill="#181A17"/>
+<text x="120" y="372" fill="#9A968C" font-size="14" font-weight="500" text-anchor="middle">Home</text>
+<text x="300" y="372" fill="#C4A46A" font-size="14" font-weight="650" text-anchor="middle">Radio</text>
+<text x="480" y="372" fill="#9A968C" font-size="14" font-weight="500" text-anchor="middle">Log</text>
+<text x="660" y="372" fill="#9A968C" font-size="14" font-weight="500" text-anchor="middle">Modules</text>
+</svg>

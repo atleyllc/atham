@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+<style>text{font-family:'Avenir Next','Segoe UI',Helvetica,Arial,sans-serif}</style>
+<rect x="0" y="0" width="390" height="844" rx="0" fill="#0C0D0B"/>
+<text x="20" y="28" fill="#9A968C" font-size="13" font-weight="600" text-anchor="start">9:41</text>
+<text x="370" y="28" fill="#9A968C" font-size="12" font-weight="500" text-anchor="end">LTE</text>
+<rect x="0" y="40" width="390" height="56" rx="0" fill="#181A17"/>
+<line x1="0" y1="96" x2="390" y2="96" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="62" fill="#C4A46A" font-size="13" font-weight="650" text-anchor="start">N0CALL</text>
+<text x="16" y="82" fill="#9A968C" font-size="12" font-weight="500" text-anchor="start">KV4P HT  ·  FM</text>
+<text x="195.0" y="74" fill="#F3F0E8" font-size="18" font-weight="650" text-anchor="middle">146.5200</text>
+<rect x="298" y="52" width="76" height="32" rx="6" fill="#2A2418" stroke="#C4A46A" stroke-width="1.5"/>
+<text x="336" y="73" fill="#C4A46A" font-size="12" font-weight="700" text-anchor="middle">UNKEY</text>
+<rect x="0" y="772" width="390" height="72" rx="0" fill="#181A17"/>
+<line x1="0" y1="772" x2="390" y2="772" stroke="#34362F" stroke-width="1"/>
+<circle cx="48.75" cy="794" r="3" fill="#9A968C"/>
+<text x="48.75" y="818" fill="#9A968C" font-size="13" font-weight="500" text-anchor="middle">Home</text>
+<circle cx="146.25" cy="794" r="3" fill="#9A968C"/>
+<text x="146.25" y="818" fill="#9A968C" font-size="13" font-weight="500" text-anchor="middle">Radio</text>
+<circle cx="243.75" cy="794" r="3" fill="#9A968C"/>
+<text x="243.75" y="818" fill="#9A968C" font-size="13" font-weight="500" text-anchor="middle">Log</text>
+<circle cx="341.25" cy="794" r="3" fill="#C4A46A"/>
+<text x="341.25" y="818" fill="#C4A46A" font-size="13" font-weight="650" text-anchor="middle">Modules</text>
+<text x="16" y="128" fill="#F3F0E8" font-size="22" font-weight="650" text-anchor="start">Modules</text>
+<text x="16" y="152" fill="#9A968C" font-size="13" font-weight="500" text-anchor="start">Radio stays on 146.5200</text>
+<text x="16" y="180" fill="#C4A46A" font-size="15" font-weight="650" text-anchor="start">Home</text>
+<text x="374" y="180" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Docked</text>
+<text x="16" y="196" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">Station overview</text>
+<line x1="16" y1="206" x2="374" y2="206" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="218" fill="#C4A46A" font-size="15" font-weight="650" text-anchor="start">Radio</text>
+<text x="374" y="218" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Docked · owns path</text>
+<text x="16" y="234" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">VFO, scan, PTT</text>
+<line x1="16" y1="244" x2="374" y2="244" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="256" fill="#C4A46A" font-size="15" font-weight="650" text-anchor="start">Log</text>
+<text x="374" y="256" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Docked</text>
+<text x="16" y="272" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">Shared contacts</text>
+<line x1="16" y1="282" x2="374" y2="282" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="294" fill="#F3F0E8" font-size="15" font-weight="650" text-anchor="start">VoiceLog</text>
+<text x="374" y="294" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Pinned · can observe</text>
+<text x="16" y="310" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">Draft on this frequency</text>
+<line x1="16" y1="320" x2="374" y2="320" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="332" fill="#F3F0E8" font-size="15" font-weight="650" text-anchor="start">Packet</text>
+<text x="374" y="332" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Available</text>
+<text x="16" y="348" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">APRS and AX.25 on KV4P</text>
+<line x1="16" y1="358" x2="374" y2="358" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="370" fill="#F3F0E8" font-size="15" font-weight="650" text-anchor="start">Devices</text>
+<text x="374" y="370" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Available</text>
+<text x="16" y="386" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">KV4P USB, firmware, classic UI</text>
+<line x1="16" y1="396" x2="374" y2="396" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="408" fill="#9A968C" font-size="15" font-weight="650" text-anchor="start">Digital</text>
+<text x="374" y="408" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Needs USB audio + CAT</text>
+<text x="16" y="424" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">Not on this KV4P path</text>
+<line x1="16" y1="434" x2="374" y2="434" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="446" fill="#9A968C" font-size="15" font-weight="650" text-anchor="start">Mail</text>
+<text x="374" y="446" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Needs Winlink transport</text>
+<text x="16" y="462" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">Not on this KV4P path yet</text>
+<line x1="16" y1="472" x2="374" y2="472" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="484" fill="#9A968C" font-size="15" font-weight="650" text-anchor="start">Mesh</text>
+<text x="374" y="484" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Needs a Reticulum carrier</text>
+<text x="16" y="500" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">No mesh interface</text>
+<line x1="16" y1="510" x2="374" y2="510" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="522" fill="#9A968C" font-size="15" font-weight="650" text-anchor="start">Spectrum</text>
+<text x="374" y="522" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Audio FFT only</text>
+<text x="16" y="538" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">KV4P has no IQ source</text>
+<line x1="16" y1="548" x2="374" y2="548" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="560" fill="#9A968C" font-size="15" font-weight="650" text-anchor="start">Maps</text>
+<text x="374" y="560" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Needs location</text>
+<text x="16" y="576" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">Shared map not built</text>
+<line x1="16" y1="586" x2="374" y2="586" stroke="#34362F" stroke-width="1"/>
+<text x="16" y="598" fill="#9A968C" font-size="15" font-weight="650" text-anchor="start">Tools</text>
+<text x="374" y="598" fill="#9A968C" font-size="11" font-weight="500" text-anchor="end">Later</text>
+<text x="16" y="614" fill="#9A968C" font-size="11" font-weight="500" text-anchor="start">Band plan and time tools</text>
+<line x1="16" y1="624" x2="374" y2="624" stroke="#34362F" stroke-width="1"/>
+</svg>
