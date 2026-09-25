@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Same square system, on StrikeNote's dark canvas. -->
+    <color name="atley_background">#FF12141A</color>
+    <color name="atley_surface">#FF1A1D24</color>
+    <color name="atley_surface_elevated">#FF1C2331</color>
+    <color name="atley_foreground">#FFE8EEF4</color>
+    <color name="atley_muted">#FF9AA4B5</color>
+    <color name="atley_bronze">#FF89B4F8</color>
+    <color name="atley_on_bronze">#FF12141A</color>
+    <color name="atley_bronze_soft">#332F6BF0</color>
+    <color name="atley_titanium">#FF9AA4B5</color>
+    <color name="atley_folder">#FFE0B15A</color>
+    <color name="atley_danger">#FFE85D5D</color>
+    <color name="atley_border">#FF2A3242</color>
+    <color name="over_s9">#FFE0B15A</color>
+</resources>
