@@ -67,6 +67,7 @@ public class FirmwareActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Appearance.apply(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firmware);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

@@ -98,6 +98,7 @@ public class FindRepeatersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Appearance.apply(this);
         super.onCreate(savedInstanceState);
         serviceConnector = new RadioServiceConnector(this);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);

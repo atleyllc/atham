@@ -1,13 +1,13 @@
 <resources>
-    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Base.Theme.KV4PHT" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:fontFamily">@font/jost</item>
         <item name="fontFamily">@font/jost</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowBackground">@drawable/bg</item>
         <item name="android:colorBackground">@color/atley_background</item>
-        <item name="colorPrimary">@color/atley_bronze</item>
-        <item name="colorOnPrimary">@color/atley_on_bronze</item>
+        <item name="colorPrimary">@color/accent_orange</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
         <item name="colorSecondary">@color/atley_titanium</item>
         <item name="colorOnSecondary">@color/atley_on_bronze</item>
         <item name="colorSurface">@color/atley_surface</item>
@@ -27,4 +27,24 @@
     </style>
 
     <style name="Theme.KV4PHT" parent="Base.Theme.KV4PHT" />
+
+    <style name="Theme.KV4PHT.Orange" parent="Theme.KV4PHT">
+        <item name="colorPrimary">@color/accent_orange</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+    </style>
+
+    <style name="Theme.KV4PHT.Teal" parent="Theme.KV4PHT">
+        <item name="colorPrimary">@color/accent_teal</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+    </style>
+
+    <style name="Theme.KV4PHT.Rose" parent="Theme.KV4PHT">
+        <item name="colorPrimary">@color/accent_rose</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+    </style>
+
+    <style name="Theme.KV4PHT.Blue" parent="Theme.KV4PHT">
+        <item name="colorPrimary">@color/accent_blue</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+    </style>
 </resources>

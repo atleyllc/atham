@@ -59,6 +59,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.NotificationCompat;
@@ -182,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Appearance.apply(this);
         super.onCreate(savedInstanceState);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -210,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 // Highlight the tapped memory, unhighlight all the others.
                 viewModel.highlightMemory(memory);
                 memoriesAdapter.notifyDataSetChanged();
+                setModePills(false);
             }
 
             @Override
@@ -886,6 +890,70 @@ public class MainActivity extends AppCompatActivity {
         }
 
         activeScreenType = screenType;
+        styleSideNav(screenType);
+    }
+
+    private void styleSideNav(ScreenType screenType) {
+        TextView voice = findViewById(R.id.navVoice);
+        TextView chat = findViewById(R.id.navChat);
+        if (voice == null || chat == null) {
+            return;
+        }
+        boolean voiceOn = screenType != ScreenType.SCREEN_CHAT;
+        voice.setBackgroundResource(voiceOn ? R.drawable.pill_selected : R.drawable.pill_idle);
+        chat.setBackgroundResource(voiceOn ? R.drawable.pill_idle : R.drawable.pill_selected);
+        voice.setTextColor(getResources().getColor(voiceOn ? R.color.on_accent : R.color.atley_foreground));
+        chat.setTextColor(getResources().getColor(voiceOn ? R.color.atley_foreground : R.color.on_accent));
+    }
+
+    private void closeSideNav() {
+        DrawerLayout drawer = findViewById(R.id.drawerLayout);
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void navVoiceClicked(View view) {
+        showScreen(ScreenType.SCREEN_VOICE);
+        closeSideNav();
+    }
+
+    public void navChatClicked(View view) {
+        showScreen(ScreenType.SCREEN_CHAT);
+        closeSideNav();
+    }
+
+    public void navSettingsClicked(View view) {
+        closeSideNav();
+        startSettingsActivity(false);
+    }
+
+    public void navAppearanceClicked(View view) {
+        closeSideNav();
+        startSettingsActivity(true);
+    }
+
+    public void navRepeatersClicked(View view) {
+        closeSideNav();
+        if (radioAudioService != null && radioAudioService.isRadioConnected()) {
+            startFindRepeatersActivity();
+        } else {
+            showSimpleSnackbar(getString(R.string.radio_not_found));
+        }
+    }
+
+    public void navFirmwareClicked(View view) {
+        closeSideNav();
+        if (!canFlashFirmware()) {
+            showSimpleSnackbar(getString(R.string.firmware_flash_requires_usb));
+            return;
+        }
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.flash_firmware_title))
+                .setMessage(getString(R.string.flash_firmware_message))
+                .setPositiveButton(getString(R.string.flash_firmware_button), (d, i) -> startFirmwareActivity())
+                .setNegativeButton(getString(R.string.cancel_display), (d, i) -> { })
+                .show();
     }
 
     private void showCallsignSnackbar(CharSequence snackbarMsg) {
@@ -897,10 +965,14 @@ public class MainActivity extends AppCompatActivity {
                         startSettingsActivity();
                     }
                 })
-                .setBackgroundTint(getResources().getColor(R.color.atley_bronze))
-                .setTextColor(getResources().getColor(R.color.atley_on_bronze))
-                .setActionTextColor(getResources().getColor(R.color.black))
+                .setTextColor(getResources().getColor(R.color.on_accent))
+                .setActionTextColor(getResources().getColor(R.color.white))
                 .setAnchorView(findViewById(R.id.bottomNavigationView));
+        View snackbarView = callsignSnackbar.getView();
+        snackbarView.setBackgroundResource(R.drawable.snackbar_card);
+        ViewGroup.MarginLayoutParams snackParams = (ViewGroup.MarginLayoutParams) snackbarView.getLayoutParams();
+        snackParams.setMargins(48, 0, 48, 24);
+        snackbarView.setLayoutParams(snackParams);
 
         // Make the text of the snackbar larger.
         TextView snackbarActionTextView = (TextView) callsignSnackbar.getView().findViewById(com.google.android.material.R.id.snackbar_action);
@@ -1302,6 +1374,7 @@ public class MainActivity extends AppCompatActivity {
         // Unhighlight all memory rows, since this is a simplex frequency.
         viewModel.highlightMemory(null);
         memoriesAdapter.notifyDataSetChanged();
+        setModePills(false);
     }
 
     /**
@@ -1320,6 +1393,7 @@ public class MainActivity extends AppCompatActivity {
 
                 showMemoryName(channelMemories.get(i).name);
                 showFrequency(activeFrequencyStr);
+                setModePills(false);
                 return;
             }
         }
@@ -1763,6 +1837,72 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void modeVfoClicked(View view) {
+        if (radioAudioService != null && radioAudioService.getMode() == RadioMode.SCAN) {
+            radioAudioService.setScanning(false, true);
+        }
+        setScanningUi(false);
+        if (radioAudioService != null) {
+            radioAudioService.setActiveMemoryId(-1);
+        }
+        if (activeFrequencyStr != null) {
+            tuneToFreqUi(activeFrequencyStr);
+        }
+        EditText frequency = findViewById(R.id.activeFrequency);
+        frequency.requestFocus();
+    }
+
+    public void modeMrClicked(View view) {
+        if (radioAudioService != null && radioAudioService.getMode() == RadioMode.SCAN) {
+            radioAudioService.setScanning(false, true);
+            setScanningUi(false);
+        }
+        List<ChannelMemory> memories = viewModel.getChannelMemories().getValue();
+        ChannelMemory selected = null;
+        if (memories != null) {
+            for (ChannelMemory memory : memories) {
+                if (memory.isHighlighted() || memory.memoryId == activeMemoryId) {
+                    selected = memory;
+                    break;
+                }
+            }
+            if (selected == null && !memories.isEmpty()) {
+                selected = memories.get(0);
+            }
+        }
+        if (selected != null) {
+            if (radioAudioService != null) {
+                radioAudioService.tuneToMemory(selected);
+            }
+            viewModel.highlightMemory(selected);
+            memoriesAdapter.notifyDataSetChanged();
+            tuneToMemoryUi(selected.memoryId);
+        }
+        setModePills(false);
+    }
+
+    public void modeScanClicked(View view) {
+        scanClicked(view);
+    }
+
+    private void setModePills(boolean scanning) {
+        TextView vfo = findViewById(R.id.modeVfo);
+        TextView mr = findViewById(R.id.modeMr);
+        TextView scan = findViewById(R.id.modeScan);
+        if (vfo == null || mr == null || scan == null) {
+            return;
+        }
+        boolean mrActive = !scanning && activeMemoryId > -1;
+        styleModePill(vfo, !scanning && !mrActive);
+        styleModePill(mr, mrActive);
+        styleModePill(scan, scanning);
+    }
+
+    private void styleModePill(TextView pill, boolean selected) {
+        pill.setBackgroundResource(selected ? R.drawable.pill_selected : R.drawable.pill_idle);
+        pill.setTextColor(getResources().getColor(selected ? R.color.on_accent : R.color.atley_foreground));
+    }
+
     @SuppressLint("MissingPermission")
     public void singleBeaconButtonClicked(View view) {
         if (null != radioAudioService && !radioAudioService.isTxAllowed()) {
@@ -1805,6 +1945,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        setModePills(scanning);
     }
 
     public void addMemoryClicked(View view) {
@@ -1993,6 +2134,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startSettingsActivity() {
+        startSettingsActivity(false);
+    }
+
+    public void startSettingsActivity(boolean openAppearance) {
         if (radioAudioService != null) {
             radioAudioService.setScanning(false); // Stop scanning when settings brought up, so we don't get in a bad state after.
             radioAudioService.endPtt(); // Be safe, just in case we are somehow transmitting when settings is tapped.
@@ -2002,6 +2147,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent("com.vagell.kv4pht.SETTINGS_ACTION");
         intent.putExtra("requestCode", REQUEST_SETTINGS);
+        intent.putExtra(SettingsActivity.EXTRA_OPEN_APPEARANCE, openAppearance);
         RadioModuleController radioModule = radioAudioService == null ? null : radioAudioService.getRadioModule();
         if (radioAudioService != null && radioAudioService.isRadioConnected() && radioModule != null) {
             intent.putExtra("hasHighLowPowerSwitch", radioAudioService.isHasHighLowPowerSwitch());
@@ -2040,37 +2186,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void moreClicked(View view) {
-        Context themedContext = new ContextThemeWrapper(this, R.style.Custom_PopupMenu);
-        PopupMenu moreMenu = new PopupMenu(themedContext, view);
-        moreMenu.inflate(R.menu.more_menu);
-        MainActivity activity = this;
-        moreMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.import_from_repeaterbook) {
-                    startFindRepeatersActivity();
-                } else if (item.getItemId() == R.id.flash_firmware) {
-                    new MaterialAlertDialogBuilder(activity)
-                            .setTitle(getString(R.string.flash_firmware_title))
-                            .setMessage(getString(R.string.flash_firmware_message))
-                            .setPositiveButton(getString(R.string.flash_firmware_button), (d, i) -> {
-                                startFirmwareActivity();
-                            })
-                            .setNegativeButton(getString(R.string.cancel_display), (d, i) -> {
-                                // Do nothing.
-                            })
-                            .show();
-                } else if (item.getItemId() == R.id.settings) {
-                    startSettingsActivity();
-                }
-                return true;
-            }
-        });
-
-        boolean showRadioOptions = radioAudioService != null && radioAudioService.isRadioConnected();
-        moreMenu.getMenu().findItem(R.id.flash_firmware).setEnabled(canFlashFirmware());
-        moreMenu.getMenu().findItem(R.id.import_from_repeaterbook).setEnabled(showRadioOptions);
-        moreMenu.show();
+        DrawerLayout drawer = findViewById(R.id.drawerLayout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            drawer.openDrawer(GravityCompat.START);
+        }
     }
 
     private boolean canFlashFirmware() {

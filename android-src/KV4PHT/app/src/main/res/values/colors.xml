@@ -4,32 +4,38 @@
     <color name="white">#FFFFFFFF</color>
     <color name="clear">#00FFFFFF</color>
 
-    <!-- Atley LLC dark bronze system -->
-    <color name="atley_background">#FF0B0B0F</color>
-    <color name="atley_surface">#FF12121A</color>
-    <color name="atley_surface_elevated">#FF14141C</color>
-    <color name="atley_foreground">#FFF5F5F7</color>
-    <color name="atley_muted">#FF94A3B8</color>
-    <color name="atley_bronze">#FFB08D57</color>
-    <color name="atley_on_bronze">#FF0F172A</color>
-    <color name="atley_bronze_soft">#24B08D57</color>
-    <color name="atley_titanium">#FFBFC3C7</color>
-    <color name="atley_danger">#FFF87171</color>
-    <color name="atley_border">#1AFFFFFF</color>
+    <color name="atley_background">#FFEEF1F6</color>
+    <color name="atley_surface">#FFFFFFFF</color>
+    <color name="atley_surface_elevated">#FFFFFFFF</color>
+    <color name="atley_foreground">#FF171A21</color>
+    <color name="atley_muted">#FF6B7280</color>
+    <color name="atley_danger">#FFD6293E</color>
+    <color name="atley_border">#FFE4E7EE</color>
+    <color name="atley_folder">#FF6B7280</color>
+    <color name="atley_titanium">#FF6B7280</color>
 
-    <!-- Existing names kept so layouts and radio UI keep their references. -->
+    <color name="accent_orange">#FFF08A2C</color>
+    <color name="accent_teal">#FF2FBF9B</color>
+    <color name="accent_rose">#FFC47A78</color>
+    <color name="accent_blue">#FF5B8DEF</color>
+    <color name="on_accent">#FFFFFFFF</color>
+
+    <color name="atley_bronze">@color/accent_orange</color>
+    <color name="atley_on_bronze">@color/on_accent</color>
+    <color name="atley_bronze_soft">#33F08A2C</color>
+
     <color name="medium_gray">@color/atley_surface</color>
     <color name="primary">@color/atley_foreground</color>
     <color name="primary_deselected">@color/atley_muted</color>
-    <color name="primary_veryfaint">@color/atley_bronze_soft</color>
-    <color name="accent">@color/atley_bronze</color>
+    <color name="primary_veryfaint">#1A171A21</color>
+    <color name="accent">@color/accent_orange</color>
     <color name="accent_veryfaint">@color/atley_bronze_soft</color>
-    <color name="over_s9">#FFC4A36A</color>
+    <color name="over_s9">#FFB7791F</color>
     <color name="overload">@color/atley_danger</color>
-    <color name="mtrl_textinput_default_box_stroke_color">@color/atley_muted</color>
-    <color name="light_blue_400">#FF29B6F6</color>
-    <color name="light_blue_600">#FF039BE5</color>
-    <color name="gray_400">#FFBDBDBD</color>
-    <color name="gray_600">#FF757575</color>
-    <color name="band">@color/atley_titanium</color>
+    <color name="mtrl_textinput_default_box_stroke_color">@color/atley_border</color>
+    <color name="light_blue_400">#FF5B8DEF</color>
+    <color name="light_blue_600">#FF3E6FD4</color>
+    <color name="gray_400">#FF9AA2AE</color>
+    <color name="gray_600">#FF6B7280</color>
+    <color name="band">@color/atley_muted</color>
 </resources>

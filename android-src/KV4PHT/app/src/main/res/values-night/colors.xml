@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="atley_background">#FF12141A</color>
+    <color name="atley_surface">#FF1C2028</color>
+    <color name="atley_surface_elevated">#FF242833</color>
+    <color name="atley_foreground">#FFE8EEF4</color>
+    <color name="atley_muted">#FF9AA4B5</color>
+    <color name="atley_titanium">#FF9AA4B5</color>
+    <color name="atley_folder">#FF9AA4B5</color>
+    <color name="atley_danger">#FFE85D5D</color>
+    <color name="atley_border">#FF2A3242</color>
+    <color name="primary">@color/atley_foreground</color>
+    <color name="primary_deselected">@color/atley_muted</color>
+    <color name="primary_veryfaint">#33FFFFFF</color>
+    <color name="over_s9">#FFE0B15A</color>
+    <color name="medium_gray">@color/atley_surface</color>
+</resources>

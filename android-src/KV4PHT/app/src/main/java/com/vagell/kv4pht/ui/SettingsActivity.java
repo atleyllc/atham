@@ -85,6 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String EXTRA_FILTER_HIGH = "filterHigh";
     public static final String EXTRA_FILTER_LOW = "filterLow";
     public static final String EXTRA_APRS_ICON = "aprsIcon";
+    public static final String EXTRA_OPEN_APPEARANCE = "openAppearance";
 
     private RadioAudioService radioAudioService = null;
     private boolean radioAudioServiceBound = false;
@@ -112,6 +113,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Appearance.apply(this);
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         hasHighLowPowerSwitch = getIntent().getBooleanExtra("hasHighLowPowerSwitch", false);
@@ -137,6 +139,59 @@ public class SettingsActivity extends AppCompatActivity {
         populateAprsIcons();
         populateRadioOptions();
         populateVersions();
+        bindAppearance();
+        if (getIntent().getBooleanExtra(EXTRA_OPEN_APPEARANCE, false)) {
+            View appearance = findViewById(R.id.appearanceCard);
+            appearance.post(() -> appearance.requestRectangleOnScreen(new android.graphics.Rect(0, 0, appearance.getWidth(), appearance.getHeight()), false));
+        }
+    }
+
+    public void themeLightClicked(View view) {
+        Appearance.saveTheme(this, Appearance.THEME_LIGHT);
+        recreate();
+    }
+
+    public void themeDarkClicked(View view) {
+        Appearance.saveTheme(this, Appearance.THEME_DARK);
+        recreate();
+    }
+
+    public void themeSystemClicked(View view) {
+        Appearance.saveTheme(this, Appearance.THEME_SYSTEM);
+        recreate();
+    }
+
+    public void accentTealClicked(View view) {
+        Appearance.saveAccent(this, Appearance.ACCENT_TEAL);
+        recreate();
+    }
+
+    public void accentRoseClicked(View view) {
+        Appearance.saveAccent(this, Appearance.ACCENT_ROSE);
+        recreate();
+    }
+
+    public void accentOrangeClicked(View view) {
+        Appearance.saveAccent(this, Appearance.ACCENT_ORANGE);
+        recreate();
+    }
+
+    public void accentBlueClicked(View view) {
+        Appearance.saveAccent(this, Appearance.ACCENT_BLUE);
+        recreate();
+    }
+
+    private void bindAppearance() {
+        String theme = Appearance.theme(this);
+        styleChoice(R.id.themeLight, Appearance.THEME_LIGHT.equals(theme));
+        styleChoice(R.id.themeDark, Appearance.THEME_DARK.equals(theme));
+        styleChoice(R.id.themeSystem, Appearance.THEME_SYSTEM.equals(theme));
+    }
+
+    private void styleChoice(int viewId, boolean selected) {
+        TextView choice = findViewById(viewId);
+        choice.setBackgroundResource(selected ? R.drawable.pill_selected : R.drawable.pill_idle);
+        choice.setTextColor(getResources().getColor(selected ? R.color.on_accent : R.color.atley_foreground));
     }
 
     @Override
