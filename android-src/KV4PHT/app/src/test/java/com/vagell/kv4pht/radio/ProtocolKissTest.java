@@ -111,6 +111,7 @@ public class ProtocolKissTest {
     public void audioCommandIdsMatchFirmware() {
         assertEquals(0x0C, Protocol.SndCommand.COMMAND_HOST_TX_AUDIO.getValue());
         assertEquals(0x0C, Protocol.RcvCommand.COMMAND_RX_AUDIO.getValue());
+        assertEquals(0x07, Protocol.RcvCommand.COMMAND_RX_AUDIO_OPUS.getValue());
     }
 
     @Test
@@ -348,6 +349,20 @@ public class ProtocolKissTest {
         assertTrue(called);
         assertEquals(Protocol.RcvCommand.COMMAND_RX_AUDIO, command);
         assertEquals(audioPayload.length, payloadLen);
+        assertArrayEquals(audioPayload, payload);
+    }
+
+    @Test
+    public void legacyOpusRxAudioFrameDispatchesPayload() {
+        byte[] audioPayload = new byte[]{0x55, 0x66};
+        byte[] frame = buildKissFrame(
+            Protocol.KISS_CMD_SETHARDWARE,
+            buildKv4pVendorPayload(Protocol.RcvCommand.COMMAND_RX_AUDIO_OPUS.getValue(), audioPayload));
+
+        newParser().processBytes(frame);
+
+        assertTrue(called);
+        assertEquals(Protocol.RcvCommand.COMMAND_RX_AUDIO_OPUS, command);
         assertArrayEquals(audioPayload, payload);
     }
 
