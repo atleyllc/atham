@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">kv4p HT</string>
+    <string name="app_name">ATHAM</string>
     <string name="second_fragment_label">第二段</string>
     <string name="voice_display">语音</string>
     <string name="aprs_chat_display">APRS聊天</string>

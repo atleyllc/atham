@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/atham_black"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/atham_graphite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="12dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/athamCallsign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N0CALL"
+                android:textColor="@color/atham_gold"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/athamDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KV4P HT  ·  FM"
+                android:textColor="@color/atham_muted"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/athamFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="146.5200"
+            android:textColor="@color/atham_text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/athamUnkey"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:backgroundTint="#FF2A2418"
+            android:minWidth="76dp"
+            android:text="UNKEY"
+            android:textColor="@color/atham_gold" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:id="@+id/sectionHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home"
+                    android:textColor="@color/atham_text"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/atham_graphite"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/homeConnection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Disconnected"
+                        android:textColor="@color/atham_err"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/homeFrequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="146.5200 MHz"
+                        android:textColor="@color/atham_text"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/homeMeta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="FM   ·   SIMPLEX   ·   Squelch 2   ·   Tone off"
+                        android:textColor="@color/atham_muted" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Launch"
+                    android:textColor="@color/atham_gold"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/launchRadio"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/atham_graphite"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="Talk on this frequency"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/launchScan"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/atham_graphite"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="Scan a saved bank"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/launchLog"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/atham_graphite"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="Log a contact"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/launchClassic"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/atham_graphite"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="16dp"
+                    android:text="KV4P Classic"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_gold"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionRadio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/radioState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DISCONNECTED"
+                    android:textColor="@color/atham_err"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/radioFrequency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="146.5200"
+                    android:textColor="@color/atham_text"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/radioMeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="FM    SIMPLEX    Tone off    Squelch 2"
+                    android:textColor="@color/atham_muted" />
+
+                <EditText
+                    android:id="@+id/radioFrequencyInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/atham_graphite"
+                    android:hint="Frequency"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="146.5200"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/radioTune"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/atham_graphite_2"
+                        android:text="Tune"
+                        android:textAllCaps="false"
+                        android:textColor="@color/atham_text" />
+
+                    <Button
+                        android:id="@+id/radioConnect"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF2A2418"
+                        android:text="Connect"
+                        android:textAllCaps="false"
+                        android:textColor="@color/atham_gold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/radioSignal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/atham_graphite"
+                    android:padding="16dp"
+                    android:text="USB detached. PTT stays blocked until a KV4P HT is connected."
+                    android:textColor="@color/atham_muted" />
+
+                <Button
+                    android:id="@+id/radioScan"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="@color/atham_graphite_2"
+                    android:text="Scan memories"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text" />
+
+                <Button
+                    android:id="@+id/radioPtt"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#FF2A2418"
+                    android:text="HOLD TO TALK"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_gold"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionLog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Log"
+                    android:textColor="@color/atham_text"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/logBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="No contacts yet. VoiceLog drafts stay here after you finalize them."
+                    android:textColor="@color/atham_muted"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionModules"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Modules"
+                    android:textColor="@color/atham_text"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/modulesHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Radio stays on 146.5200"
+                    android:textColor="@color/atham_muted" />
+
+                <Button
+                    android:id="@+id/moduleVoice"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="start|center_vertical"
+                    android:text="VoiceLog    Observe this frequency"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text" />
+
+                <Button
+                    android:id="@+id/modulePacket"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="start|center_vertical"
+                    android:text="Packet    Open KV4P Classic APRS"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text" />
+
+                <Button
+                    android:id="@+id/moduleDevices"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="start|center_vertical"
+                    android:text="Devices    Settings and firmware"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_text" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:text="Digital    Needs USB audio and CAT"
+                    android:textColor="@color/atham_muted" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:text="Mail    Needs a Winlink transport"
+                    android:textColor="@color/atham_muted" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:text="Mesh    Needs a Reticulum carrier"
+                    android:textColor="@color/atham_muted" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:text="Spectrum    KV4P has no IQ source"
+                    android:textColor="@color/atham_muted" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:text="Maps    Shared map is not built"
+                    android:textColor="@color/atham_muted" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:text="Tools    Band plan and time tools are later"
+                    android:textColor="@color/atham_muted" />
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sectionVoice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OBSERVING"
+                    android:textColor="@color/atham_rx"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VoiceLog does not own transmit"
+                    android:textColor="@color/atham_muted" />
+
+                <TextView
+                    android:id="@+id/voiceContext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="2 m  ·  FM  ·  SIMPLEX"
+                    android:textColor="@color/atham_text"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/voiceHeard"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/atham_graphite"
+                    android:gravity="top"
+                    android:hint="What you heard"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:padding="12dp"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted" />
+
+                <EditText
+                    android:id="@+id/voiceCallsign"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/atham_graphite"
+                    android:hint="Callsign"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted" />
+
+                <EditText
+                    android:id="@+id/voiceReport"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/atham_graphite"
+                    android:hint="Report"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted" />
+
+                <EditText
+                    android:id="@+id/voiceName"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/atham_graphite"
+                    android:hint="Name"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/atham_text"
+                    android:textColorHint="@color/atham_muted" />
+
+                <Button
+                    android:id="@+id/voiceFinalize"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#FF2A2418"
+                    android:text="Finalize contact"
+                    android:textAllCaps="false"
+                    android:textColor="@color/atham_gold" />
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/atham_graphite"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/navHome"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Home"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_gold" />
+
+        <Button
+            android:id="@+id/navRadio"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Radio"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_muted" />
+
+        <Button
+            android:id="@+id/navLog"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Log"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_muted" />
+
+        <Button
+            android:id="@+id/navModules"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Modules"
+            android:textAllCaps="false"
+            android:textColor="@color/atham_muted" />
+    </LinearLayout>
+</LinearLayout>

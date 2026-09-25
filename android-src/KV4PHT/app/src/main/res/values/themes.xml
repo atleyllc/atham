@@ -25,4 +25,13 @@
     </style>
 
     <style name="Theme.KV4PHT" parent="Base.Theme.KV4PHT" />
+
+    <style name="Theme.ATHAM" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:statusBarColor">@color/atham_black</item>
+        <item name="android:navigationBarColor">@color/atham_graphite</item>
+        <item name="android:windowBackground">@color/atham_black</item>
+        <item name="colorPrimary">@color/atham_gold</item>
+        <item name="colorOnPrimary">@color/atham_black</item>
+        <item name="android:textColor">@color/atham_text</item>
+    </style>
 </resources>
